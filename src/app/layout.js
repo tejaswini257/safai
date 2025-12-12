@@ -1,12 +1,10 @@
-export const metadata = {
-  title: "Safai Dashboard",
-  description: "Admin dashboard",
-};
+// src/app/layout.js
+import './globals.css'; // This line is crucial for Tailwind to work
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: "system-ui, sans-serif" }}>
+      <body>
         {children}
       </body>
     </html>

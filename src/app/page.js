@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main style={{ padding: 24 }}>
-      <h1>Safai Dashboard</h1>
-      <p>
+    <main className="p-6">
+      <h1 className="text-3xl font-bold">Safai Dashboard</h1>
+      <p className="mt-4">
         Go to{" "}
-        <Link href="/dashboard" style={{ color: "blue" }}>
+        <Link href="/dashboard" className="text-blue-600 underline">
           Dashboard
         </Link>
       </p>
