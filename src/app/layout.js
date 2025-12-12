@@ -1,3 +1,4 @@
+import "./globals.css";
 export const metadata = {
   title: "Safai Dashboard",
   description: "Admin dashboard",
@@ -6,7 +7,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: "system-ui, sans-serif" }}>
+      <body className="min-h-screen bg-slate-100 text-slate-900 antialiased">
         {children}
       </body>
     </html>
