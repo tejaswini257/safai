@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MapPin, Map, Pencil, Trash2 } from "lucide-react";
 
 const MOCK_WASHROOM = {
@@ -19,10 +20,11 @@ const MOCK_WASHROOM = {
 };
 
 export default function WashroomOverview({ washroom = MOCK_WASHROOM }) {
+  const router = useRouter();
+
   const handleLocate = () => {
-    if (!washroom?.lat || !washroom?.lng) return;
-    const url = `https://www.google.com/maps?q=${washroom.lat},${washroom.lng}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    // Navigate to internal Locate on Map tool/page
+    router.push("/dashboard/locate");
   };
 
   const handleDelete = () => {
