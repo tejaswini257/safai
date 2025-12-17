@@ -1,8 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import DatePicker from "react-datepicker";
+import { format, parse } from 'date-fns';
+import "react-datepicker/dist/react-datepicker.css";
 import {
-  Calendar,
+  Calendar as CalendarIcon,
   FileText,
   Filter,
   RefreshCw,
@@ -92,7 +96,7 @@ function CustomDropdown({ label, value, options, onChange, icon: Icon }) {
         onClick={() => setIsOpen(!isOpen)}
         className={`w-full flex items-center justify-between rounded-lg border ${
           isOpen ? "border-indigo-500" : "border-slate-300"
-        } bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100`}
+        } bg-white px-4 py-2.5 text-sm text-[#8A8AB2] shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100`}
       >
         <span className="flex items-center gap-2">
           {Icon && <Icon className="h-4 w-4 text-slate-400" />}
@@ -109,19 +113,21 @@ function CustomDropdown({ label, value, options, onChange, icon: Icon }) {
           <div className="max-h-60 overflow-y-auto">
             {options.map((option, index) => (
               <button
-                key={option}
-                type="button"
-                onClick={() => handleSelect(option)}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(-1)}
-                className={`w-full px-4 py-2 text-left text-sm transition ${
-                  option === value || hoveredIndex === index
-                    ? "bg-indigo-600 text-white"
-                    : "text-slate-700 hover:bg-slate-50"
-                }`}
-              >
-                {option}
-              </button>
+  key={option}
+  type="button"
+  onClick={() => handleSelect(option)}
+  onMouseEnter={() => setHoveredIndex(index)}
+  onMouseLeave={() => setHoveredIndex(-1)}
+  className={`w-full px-4 py-2 text-left text-sm transition ${
+    option === value
+      ? "bg-indigo-100 text-[#4B4E77] font-medium"
+      : hoveredIndex === index
+      ? "bg-indigo-50 text-[#4B4E77]"
+      : "text-[#4B4E77] hover:bg-indigo-50"
+  }`}
+>
+  {option}
+</button>
             ))}
           </div>
         </div>
@@ -132,41 +138,85 @@ function CustomDropdown({ label, value, options, onChange, icon: Icon }) {
 
 export default function ReportsPage() {
   const [reportType, setReportType] = useState("Cleaning Report");
+  const router = useRouter();
   const [filters, setFilters] = useState({
     zone: "All Zones",
     location: "All Locations",
     cleaner: "All Cleaners",
-    startDate: "11-12-2025",
-    endDate: "11-12-2025",
+    startDate: new Date(),
+    endDate: new Date(),
     status: "All Status",
   });
+  
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+  const datePickerRef = useRef(null);
+  
+  // Handle click outside to close date picker
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+        setShowStartDatePicker(false);
+        setShowEndDatePicker(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  const handleGenerateReport = () => {
+    // Format dates to DD-MM-YYYY before sending
+    const formatDate = (date) => format(date, 'dd-MM-yyyy');
+    
+    // Navigate to the generated report page with query parameters
+    const queryParams = new URLSearchParams({
+      type: reportType,
+      zone: filters.zone,
+      startDate: formatDate(filters.startDate),
+      endDate: formatDate(filters.endDate),
+      status: filters.status
+    });
+    router.push(`/dashboard/reports/generated?${queryParams.toString()}`);
+  };
 
   const handleReset = () => {
+    const today = new Date();
     setFilters({
       zone: "All Zones",
       location: "All Locations",
       cleaner: "All Cleaners",
-      startDate: "11-12-2025",
-      endDate: "11-12-2025",
+      startDate: today,
+      endDate: today,
       status: "All Status",
     });
     setReportType("Cleaning Report");
   };
+  
+  const handleStartDateChange = (date) => {
+    setFilters({ ...filters, startDate: date });
+    setShowStartDatePicker(false);
+  };
+  
+  const handleEndDateChange = (date) => {
+    setFilters({ ...filters, endDate: date });
+    setShowEndDatePicker(false);
+  };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 bg-[#F0F0FA] p-4 w-full">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 text-white shadow-lg">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-[#10143A] via-[#353767] to-[#6A6C97] text-white shadow-lg">
               <FileText className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Reports</h1>
-              <p className="text-sm text-slate-500 mt-1">
-                Generate and export detailed reports
-              </p>
+              <h1 className="text-2xl font-bold text-slate-800">Reports</h1>
+<p className="text-sm text-slate-500 mt-1">
+  Generate and export detailed reports
+</p>
             </div>
           </div>
         </div>
@@ -196,78 +246,131 @@ export default function ReportsPage() {
           <h2 className="text-lg font-semibold text-slate-900">Filters</h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {/* Zone / Location Type */}
-          <CustomDropdown
-            label="Zone / Location Type"
-            value={filters.zone}
-            options={zones}
-            onChange={(value) => setFilters({ ...filters, zone: value })}
-          />
-
-          {/* Location / Washroom */}
-          <CustomDropdown
-            label="Location / Washroom"
-            value={filters.location}
-            options={locations}
-            onChange={(value) => setFilters({ ...filters, location: value })}
-          />
-
-          {/* Cleaner */}
-          <CustomDropdown
-            label="Cleaner"
-            value={filters.cleaner}
-            options={cleaners}
-            onChange={(value) => setFilters({ ...filters, cleaner: value })}
-          />
-
-          {/* Start Date */}
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Start Date
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                value={filters.startDate}
-                onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 pr-10 text-sm text-slate-900 shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
-                placeholder="DD-MM-YYYY"
+        <div className="space-y-4">
+          {/* First Row */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {/* Zone / Location Type */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Zone / Location Type
+              </label>
+              <CustomDropdown
+                value={filters.zone}
+                options={zones}
+                onChange={(value) => setFilters({ ...filters, zone: value })}
               />
-              <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            </div>
+
+            {/* Location / Washroom */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Location / Washroom
+              </label>
+              <CustomDropdown
+                value={filters.location}
+                options={locations}
+                onChange={(value) => setFilters({ ...filters, location: value })}
+              />
+            </div>
+
+            {/* Cleaner */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Cleaner
+              </label>
+              <CustomDropdown
+                value={filters.cleaner}
+                options={cleaners}
+                onChange={(value) => setFilters({ ...filters, cleaner: value })}
+              />
             </div>
           </div>
 
-          {/* End Date */}
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              End Date
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                value={filters.endDate}
-                onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 pr-10 text-sm text-slate-900 shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
-                placeholder="DD-MM-YYYY"
+          {/* Second Row */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {/* Start Date */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Start Date
+              </label>
+              <div className="relative w-full" ref={datePickerRef}>
+                <div 
+                  className="flex items-center justify-between w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm cursor-pointer h-[42px]"
+                  onClick={() => setShowStartDatePicker(!showStartDatePicker)}
+                >
+                  <span className="text-sm">{format(filters.startDate, 'dd-MM-yyyy')}</span>
+                  <CalendarIcon className="h-4 w-4 text-slate-400 flex-shrink-0" />
+                </div>
+                {showStartDatePicker && (
+                  <div className="absolute z-10 mt-1">
+                    <DatePicker
+                      selected={filters.startDate}
+                      onChange={handleStartDateChange}
+                      selectsStart
+                      startDate={filters.startDate}
+                      endDate={filters.endDate}
+                      maxDate={new Date()}
+                      inline
+                      className="border border-slate-200 rounded-lg shadow-lg"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* End Date */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                End Date
+              </label>
+              <div className="relative w-full" ref={datePickerRef}>
+                <div 
+                  className="flex items-center justify-between w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm cursor-pointer h-[42px]"
+                  onClick={() => setShowEndDatePicker(!showEndDatePicker)}
+                >
+                  <span className="text-sm">{format(filters.endDate, 'dd-MM-yyyy')}</span>
+                  <CalendarIcon className="h-4 w-4 text-slate-400 flex-shrink-0" />
+                </div>
+                {showEndDatePicker && (
+                  <div className="absolute z-10 mt-1">
+                    <DatePicker
+                      selected={filters.endDate}
+                      onChange={handleEndDateChange}
+                      selectsEnd
+                      startDate={filters.startDate}
+                      endDate={filters.endDate}
+                      minDate={filters.startDate}
+                      maxDate={new Date()}
+                      inline
+                      className="border border-slate-200 rounded-lg shadow-lg"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            
+            {/* Status */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Status
+              </label>
+              <CustomDropdown
+                value={filters.status}
+                options={statuses}
+                onChange={(value) => setFilters({ ...filters, status: value })}
               />
-              <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             </div>
           </div>
-
-          {/* Status */}
-          <CustomDropdown
-            label="Status"
-            value={filters.status}
-            options={statuses}
-            onChange={(value) => setFilters({ ...filters, status: value })}
-          />
         </div>
 
         {/* Action Buttons */}
         <div className="mt-6 flex items-center gap-3">
-          <button className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <FileText className="h-4 w-4" />
+          <button 
+            onClick={handleGenerateReport}
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#10143A] via-[#353767] to-[#6A6C97] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200 hover:opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
+          >
+            <FileText className="h-4 w-4 text-white" />
             Generate Report
           </button>
           <button
