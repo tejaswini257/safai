@@ -1,25 +1,16 @@
+import { MessageSquare } from 'lucide-react';
+
 export default function ReviewHeader({ totalReviews }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span
-          style={{
-            fontSize: 22,
-          }}
-        >
-          💬
-        </span>
-        <h1 style={{ fontSize: 24, fontWeight: 600, margin: 0 }}>User Reviews</h1>
+    <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center gap-3">
+        <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+          <MessageSquare className="w-5 h-5" />
+        </div>
+        <h1 className="text-2xl font-semibold text-gray-900">User Reviews</h1>
       </div>
-
-      <span style={{ fontSize: 14, color: "#6b7280" }}>
-        Total Reviews: {totalReviews}
+      <span className="text-sm text-gray-500">
+        Total Reviews: <span className="font-medium text-gray-900">{totalReviews}</span>
       </span>
     </div>
   );

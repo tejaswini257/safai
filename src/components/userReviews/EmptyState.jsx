@@ -1,10 +1,14 @@
+import { MessageSquareOff } from 'lucide-react';
+
 export default function EmptyState() {
   return (
-    <div style={{ textAlign: "center", color: "#6b7280", padding: "40px 0" }}>
-      <div style={{ fontSize: 40, marginBottom: 8 }}>💬</div>
-      <h2 style={{ fontSize: 18, marginBottom: 4 }}>No Reviews Found</h2>
-      <p style={{ fontSize: 14 }}>
-        There are no reviews matching the current filter.
+    <div className="flex flex-col items-center justify-center py-12 text-center">
+      <div className="p-4 mb-4 bg-indigo-100 rounded-full text-indigo-600">
+        <MessageSquareOff className="w-8 h-8" />
+      </div>
+      <h3 className="mb-1 text-lg font-medium text-gray-900">No reviews yet</h3>
+      <p className="max-w-md mx-auto text-gray-500">
+        There are no reviews available at the moment. Check back later or be the first to leave a review!
       </p>
     </div>
   );

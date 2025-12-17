@@ -72,6 +72,26 @@ const navSections = [
   },
 ];
 
+// Custom component for the active link background with the requested gradient
+const ActiveGradientBackground = ({ active, children }) => {
+  const activeStyle = active
+    ? {
+        background: "linear-gradient(to right, #FF9391, #FE7775)", // Custom gradient from #FF9391 to #FE7775
+        color: "white",
+        boxShadow: "0 4px 6px -1px rgba(254, 119, 117, 0.4), 0 2px 4px -2px rgba(254, 119, 117, 0.4)",
+      }
+    : {};
+
+  // We apply the custom style directly using the 'style' prop when active
+  // and pass through the children. The classes will be applied in the parent.
+  return (
+    <div className="flex-1" style={activeStyle}>
+      {children}
+    </div>
+  );
+};
+
+
 export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) {
   const pathname = usePathname();
   const initialOpen = useMemo(() => {
@@ -174,11 +194,17 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
                         key={item.label}
                         href={item.href}
                         onClick={onClose}
+                        // Applying common styles first
                         className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
                           active
-                            ? "bg-purple-600 text-white shadow-md"
+                            ? "text-white" // Text color handled by style prop
                             : "text-slate-200 hover:bg-white/5 hover:text-white"
                         }`}
+                        // Applying custom gradient/color directly when active
+                        style={active ? {
+                            background: "linear-gradient(to right, #FF9391, #FE7775)",
+                            boxShadow: "0 4px 6px -1px rgba(254, 119, 117, 0.4), 0 2px 4px -2px rgba(254, 119, 117, 0.4)",
+                        } : {}}
                       >
                         <Icon
                           className={`h-5 w-5 flex-shrink-0 transition ${
@@ -202,7 +228,7 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
                         onClick={() => toggleGroup(item.label)}
                         className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
                           active
-                            ? "bg-white/10 text-white"
+                            ? "bg-white/10 text-white" // Keeping this as a different style for parent menu items
                             : "text-slate-200 hover:bg-white/5 hover:text-white"
                         }`}
                       >
@@ -237,10 +263,14 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
                                 href={child.href}
                                 onClick={onClose}
                                 className={`group flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-all ${
-                                  childActive
-                                    ? "bg-white/10 text-white"
-                                    : "text-slate-200 hover:bg-white/5 hover:text-white"
+                                    childActive
+                                      ? "text-white" // Text color handled by style prop
+                                      : "text-slate-200 hover:bg-white/5 hover:text-white"
                                 }`}
+                                style={childActive ? {
+                                    background: "linear-gradient(to right, #FF9391, #FE7775)",
+                                    boxShadow: "0 2px 4px -2px rgba(254, 119, 117, 0.2)",
+                                } : {}}
                               >
                                 {ChildIcon ? (
                                   <ChildIcon
@@ -251,7 +281,7 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
                                     }`}
                                   />
                                 ) : (
-                                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-slate-400 group-hover:bg-indigo-300" />
+                                  <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${childActive ? 'bg-white' : 'bg-slate-400 group-hover:bg-indigo-300'}`} />
                                 )}
                                 <span className="flex-1 whitespace-nowrap overflow-hidden text-ellipsis">
                                   {child.label}
@@ -299,4 +329,3 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
     </aside>
   );
 }
-

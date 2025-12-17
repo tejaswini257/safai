@@ -1,92 +1,88 @@
-function StarRating({ value }) {
-  const stars = [1, 2, 3, 4, 5];
-  return (
-    <div className="flex gap-0.5">
-      {stars.map((star) => (
-        <span
-          key={star}
-          className={star <= value ? "text-amber-400" : "text-slate-300"}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function Avatar({ name }) {
-  const initial = name?.charAt(0)?.toUpperCase() || "?";
-  return (
-    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold text-lg">
-      {initial}
-    </div>
-  );
-}
+import { CheckCircle, AlertCircle, MessageSquare, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 export default function ReviewCard({ review, onToggleResolve, onMarkIssue }) {
-  const createdDate = new Date(review.createdAt).toLocaleString("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
-
-  const hasIssueFlow = review.status !== "none"; // pending or resolved
-
+  const { id, userName, rating, comment, createdAt, status } = review;
+  const isResolved = status === 'resolved';
+  const hasIssue = status !== 'none';
+  
   return (
-    <div className="border border-slate-200 rounded-lg p-4 flex gap-3">
-      {/* Avatar */}
-      <Avatar name={review.userName} />
-
-      {/* Right content */}
-      <div className="flex-1">
-        <div className="flex justify-between mb-1">
-          <div>
-            <div className="font-semibold text-sm">{review.userName}</div>
-            <div className="text-[11px] text-slate-500">{createdDate}</div>
+    <div className="space-y-3">
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold">
+            {userName?.charAt(0) || 'U'}
           </div>
-
-          <div className="text-right">
-            <StarRating value={review.rating} />
-            <div className="text-[11px] text-slate-500">
-              {review.rating} / 5
+          <div>
+            <h4 className="font-medium text-gray-900">{userName || 'Unknown User'}</h4>
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <svg
+                  key={i}
+                  className={`w-4 h-4 ${i < rating ? 'text-amber-400' : 'text-gray-300'}`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+              <span className="text-xs text-gray-500 ml-1">({rating}.0)</span>
             </div>
           </div>
         </div>
+        <span className="text-xs text-gray-500">
+          {new Date(createdAt).toLocaleDateString()}
+        </span>
+      </div>
 
-        <p className="text-sm text-slate-900 mt-2 mb-2">{review.comment}</p>
+      <p className="text-sm text-gray-600 pl-13">{comment}</p>
 
-        {/* If no issue yet -> show "Mark as issue" */}
-        {!hasIssueFlow && (
-          <button
-            onClick={() => onMarkIssue(review.id)}
-            className="text-xs px-3 py-1 rounded-md border border-amber-300 text-amber-700 bg-amber-50 hover:bg-amber-100"
+      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => onToggleResolve?.(id)}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${
+              isResolved 
+                ? 'bg-green-100 text-green-700' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
           >
-            Mark as issue
+            {isResolved ? (
+              <>
+                <CheckCircle className="w-3.5 h-3.5" />
+                Resolved
+              </>
+            ) : (
+              'Mark as Resolved'
+            )}
           </button>
-        )}
 
-        {/* If already marked as issue -> show status + resolve toggle */}
-        {hasIssueFlow && (
-          <div className="flex items-center justify-between mt-1">
-            <span
-              className={`px-3 py-1 rounded-full text-[11px] font-medium ${
-                review.status === "resolved"
-                  ? "bg-emerald-50 text-emerald-700"
-                  : "bg-rose-50 text-rose-700"
-              }`}
-            >
-              {review.status === "resolved" ? "Resolved" : "Pending"}
-            </span>
+          <button 
+            onClick={() => onMarkIssue?.(id)}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${
+              hasIssue
+                ? 'bg-red-100 text-red-700'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <AlertCircle className="w-3.5 h-3.5" />
+            {hasIssue ? 'Issue Reported' : 'Report Issue'}
+          </button>
+        </div>
 
-            <button
-              onClick={() => onToggleResolve(review.id)}
-              className="text-xs px-3 py-1 rounded-md border border-slate-200 bg-slate-900 text-white hover:bg-slate-800"
-            >
-              {review.status === "resolved"
-                ? "Mark as pending"
-                : "Mark as resolved"}
-            </button>
-          </div>
-        )}
+        <div className="flex items-center gap-3">
+          <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700">
+            <ThumbsUp className="w-4 h-4" />
+            <span>Helpful</span>
+          </button>
+          <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700">
+            <ThumbsDown className="w-4 h-4" />
+            <span>Not Helpful</span>
+          </button>
+          <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700">
+            <MessageSquare className="w-4 h-4" />
+            <span>Reply</span>
+          </button>
+        </div>
       </div>
     </div>
   );

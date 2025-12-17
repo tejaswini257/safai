@@ -14,7 +14,7 @@ import {
 
 // Reusable card shells for consistent styling
 const CardShell = ({ title, subtitle, icon, headerRight, children }) => (
-  <div className="card-base">
+  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
     <div className="card-header">
       <div className="card-heading">
         {icon}
@@ -29,202 +29,182 @@ const CardShell = ({ title, subtitle, icon, headerRight, children }) => (
   </div>
 );
 
-const ChartCard = ({ series }) => (
-  <CardShell
-    title="Weekly satisfaction score"
-    subtitle="Service Quality Trend"
-    headerRight={
-      <div className="badge badge-soft-emerald gap-1.5">
-        <span className="dot dot-emerald" />
-        Rising +0.4
+const ChartCard = () => {
+  // Updated data to match the reference image
+  const data = [
+    { day: 'Mon', value: 40 },
+    { day: 'Tue', value: 30 },
+    { day: 'Wed', value: 60 },
+    { day: 'Thu', value: 50 },
+    { day: 'Fri', value: 45 },
+    { day: 'Sat', value: 25 },
+    { day: 'Sun', value: 35 },
+  ];
+
+  const chartHeight = 150;
+  const chartWidth = 300;
+  const padding = { top: 20, right: 20, bottom: 30, left: 10 };
+  const maxValue = 80;
+  const step = (chartWidth - padding.left - padding.right) / (data.length - 1);
+
+  // Calculate points with adjusted padding
+  const points = data.map((item, index) => ({
+    x: padding.left + index * step,
+    y: chartHeight - padding.bottom - (item.value / maxValue) * (chartHeight - padding.top - padding.bottom),
+    value: item.value,
+    day: item.day
+  }));
+
+  // Create path for the line
+  const path = points.reduce((acc, point, i, arr) => {
+    if (i === 0) return `M ${point.x},${point.y}`;
+    return `${acc} L ${point.x},${point.y}`;
+  }, '');
+
+  // Create area path for gradient fill
+  const areaPath = `${path} L ${points[points.length - 1].x},${chartHeight - padding.bottom} L ${points[0].x},${chartHeight - padding.bottom} Z`;
+
+  return (
+    <div className="bg-white rounded-lg p-4 border border-gray-200">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="text-sm font-medium text-gray-900">Weekly Satisfaction Score</h3>
+        <span className="text-xs text-gray-500">This Week</span>
       </div>
-    }
-  >
-    <div className="mt-3">
-      <div className="relative rounded-[var(--card-radius)] bg-gradient-to-br from-indigo-50 via-slate-50 to-cyan-50 p-[10px] ring-1 ring-slate-100/70">
-        <svg viewBox="0 0 240 80" className="h-20 w-full text-indigo-500">
+      <div className="relative h-40 -mx-2 -mb-2">
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+          preserveAspectRatio="none"
+        >
           <defs>
-            <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#4f46e5" stopOpacity="0.22" />
-              <stop offset="100%" stopColor="#4f46e5" stopOpacity="0" />
+            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#0F123F" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="#0F123F" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <path d={`${sparklinePath(series)} L232,80 L8,80 Z`} fill="url(#area)" />
-          <path
-            d={sparklinePath(series)}
+          
+          {/* Area fill */}
+          <path 
+            d={areaPath}
+            fill="url(#areaGradient)"
+            stroke="none"
+          />
+          
+          {/* Line path */}
+          <path 
+            d={path}
             fill="none"
-            stroke="currentColor"
+            stroke="#0f123fe2"
             strokeWidth="2"
             strokeLinecap="round"
+            strokeLinejoin="round"
           />
+          
+          {/* Data points */}
+          {points.map((point, i) => (
+            <circle
+              key={i}
+              cx={point.x}
+              cy={point.y}
+              r="2.5"
+              fill="#0F123F"
+              stroke="#fff"
+              strokeWidth="1.5"
+            />
+          ))}
+          
+          {/* X-axis labels */}
+          {points.map((point, i) => (
+            <text
+              key={`label-${i}`}
+              x={point.x}
+              y={chartHeight - 10}
+              textAnchor="middle"
+              fontSize="9"
+              fill="#6B7280"
+              fontFamily="sans-serif"
+            >
+              {point.day}
+            </text>
+          ))}
+          
+          {/* Y-axis values - removed 0 */}
+          {[20, 40, 60, 80].map((value, i) => (
+            <text
+              key={`y-${i}`}
+              x={padding.left - 5}
+              y={chartHeight - padding.bottom - (value / maxValue) * (chartHeight - padding.top - padding.bottom) + 3}
+              textAnchor="end"
+              fontSize="8"
+              fill="#9CA3AF"
+              fontFamily="sans-serif"
+            >
+              {value}
+            </text>
+          ))}
         </svg>
-        <div className="mt-1 flex items-center justify-between text-[10px] text-slate-500">
-          <span>Jan</span>
-          <span>Mar</span>
-          <span>May</span>
-          <span>Jul</span>
-          <span>Sep</span>
-          <span>Nov</span>
-        </div>
       </div>
     </div>
-  </CardShell>
-);
-
-const HighlightsCard = ({ locations }) => (
-  <CardShell
-    title="Today&apos;s Top Rated Locations"
-    headerRight={
-      <button className="link-cta" type="button">
-        View All
-      </button>
-    }
-  >
-    <div className="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-      {locations.slice(0, 3).map((loc, idx) => {
-        const medalColors = [
-          { bg: "from-amber-400 to-amber-600", icon: "text-amber-500", border: "border-amber-200" },
-          { bg: "from-slate-300 to-slate-500", icon: "text-slate-400", border: "border-slate-200" },
-          { bg: "from-orange-400 to-orange-600", icon: "text-orange-500", border: "border-orange-200" },
-        ];
-        const colors = medalColors[idx];
-        const positions = ["1st", "2nd", "3rd"];
-
-        return (
-          <div
-            key={loc.name}
-            className={`group relative overflow-hidden rounded-[var(--card-radius)] border ${colors.border} bg-gradient-to-br ${colors.bg} p-3 shadow-sm transition hover:shadow-md`}
-          >
-            <div className="flex flex-col">
-              <div className="mb-1 flex items-center gap-1.5">
-                <Trophy
-                  className={`h-4 w-4 ${
-                    colors.icon === "text-amber-500"
-                      ? "text-amber-600"
-                      : colors.icon === "text-slate-400"
-                        ? "text-slate-500"
-                        : "text-orange-600"
-                  }`}
-                />
-                <span className="text-[10px] font-bold text-white/90">{positions[idx]}</span>
-              </div>
-              <p className="mb-1 text-xs font-semibold leading-snug text-white line-clamp-2">{loc.name}</p>
-              <div className="mt-1 flex items-center gap-0.5">
-                <span className="text-sm font-bold text-white">{loc.score.toFixed(1)}</span>
-                <span className="text-[10px] text-white/90">★</span>
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-
-    {locations.length > 3 && (
-      <div className="divide-y divide-slate-100 border-t border-slate-100 pt-3">
-        {locations.slice(3).map((loc, idx) => (
-          <div key={loc.name} className="flex items-center justify-between py-2">
-            <div className="flex items-center gap-2">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-slate-100 text-[10px] font-semibold text-slate-600">
-                {idx + 4}
-              </span>
-              <div>
-                <p className="text-xs font-medium text-slate-900 leading-snug">{loc.name}</p>
-                <p className="text-[10px] text-slate-500">Today</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-0.5">
-              <span className="text-xs font-semibold text-slate-900">{loc.score.toFixed(1)}</span>
-              <span className="text-amber-400 text-xs">★</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
-  </CardShell>
-);
+  );
+};
 
 const ActivityCard = ({ items }) => (
   <CardShell
-    title="Today&apos;s Activities"
+    title="Today's Activities"
     icon={
-      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-50">
-        <svg
-          className="h-4 w-4 text-purple-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gray-100">
+        <Activity
+          className="h-4 w-4 text-gray-600"
           strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
+        />
       </div>
     }
-    headerRight={
-      <div className="flex items-center gap-1.5">
-        <span className="badge badge-soft-emerald">Live feed</span>
-        <span className="badge badge-soft-slate hidden sm:inline">Auto-refresh</span>
-      </div>
-    }
+    headerRight={null}
   >
-    <div className="mb-3 flex items-center gap-3 text-[11px] text-slate-600">
-      <span className="legend">
-        <span className="dot dot-emerald" />
+    <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+      <span className="flex items-center">
+        <span className="w-2 h-2 rounded-full bg-[#FFADB0] mr-1"></span>
         Completed
       </span>
-      <span className="legend">
-        <span className="dot dot-sky" />
+      <span className="flex items-center">
+        <span className="w-2 h-2 rounded-full bg-[#666797] mr-1"></span>
         In progress
       </span>
-      <span className="legend">
-        <span className="dot dot-amber" />
+      <span className="flex items-center">
+        <span className="w-2 h-2 rounded-full bg-[#FCB967] mr-1"></span>
         Rating
       </span>
     </div>
 
-    <div className="max-h-[560px] space-y-2 overflow-y-auto pr-1">
+    <div className="space-y-2 max-h-[400px] overflow-y-auto pr-1">
       {items.map((item, idx) => (
         <div
           key={idx}
-          className="group rounded-[var(--card-radius)] border border-slate-100 bg-slate-50/70 p-3 shadow-xs transition hover:-translate-y-[1px] hover:border-indigo-100 hover:bg-white hover:shadow-sm"
+          className="group rounded-lg bg-white p-3 border border-gray-100 hover:shadow-sm transition-shadow"
         >
-          <div className="grid grid-cols-[auto,1fr] gap-3">
-            <div
-              className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                item.status === "completed" ? "bg-emerald-50 ring-1 ring-emerald-100" : "bg-sky-50 ring-1 ring-sky-100"
-              }`}
-            >
-              <div
-                className={`flex h-7 w-7 items-center justify-center rounded-full ${
-                  item.status === "completed" ? "bg-emerald-500" : "bg-sky-500"
-                }`}
-              >
-                <ShieldCheck className="h-4 w-4 text-white" />
-              </div>
+          <div className="flex items-start gap-3">
+            <div className={`flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full ${item.status === "completed" ? 'bg-[#FFADB0]/20' : 'bg-[#666797]/20'}`}>
+              <ShieldCheck className={`h-4 w-4 ${item.status === "completed" ? 'text-[#FFADB0]' : 'text-[#666797]'}`} />
             </div>
 
-            <div className="min-w-0 space-y-2">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span
-                  className={`badge badge-chip ${
-                    item.status === "completed" ? "badge-emerald" : "badge-sky"
-                  }`}
-                >
-                  <span className={`dot ${item.status === "completed" ? "dot-emerald" : "dot-sky"}`} />
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                <span className={`text-xs px-2 py-0.5 rounded-full ${item.status === "completed" ? 'bg-[#FFADB0]/10 text-[#FFADB0]' : 'bg-[#666797]/10 text-[#666797]'}`}>
                   {item.status}
                 </span>
-                <span className="badge badge-soft-slate gap-1">
-                  <span className="dot dot-slate" />
+                <span className="text-xs text-gray-500">
                   {item.time}
                 </span>
                 {item.rating !== null && (
-                  <span className="badge badge-soft-amber gap-1">
-                    <span className="text-amber-500">★</span>
+                  <span className="flex items-center text-xs text-amber-600">
+                    <span className="text-amber-400">★</span>
                     {item.rating}
                   </span>
                 )}
               </div>
 
-              <p className="text-[var(--body)] font-semibold leading-relaxed text-slate-900">
+              <p className="text-sm text-gray-800 leading-snug">
                 {item.text}
               </p>
             </div>
@@ -235,6 +215,68 @@ const ActivityCard = ({ items }) => (
   </CardShell>
 );
 
+const HighlightsCard = ({ locations }) => (
+  <CardShell
+    title="Today's Top Rated"
+    headerRight={
+      <button className="text-xs font-medium text-indigo-600 hover:underline">
+        View all
+      </button>
+    }
+  >
+    <div className="space-y-3">
+      {locations.slice(0, 3).map((loc, idx) => {
+        const styles = [
+          {
+            bg: "bg-[#FFE7E6]",
+            iconBg: "bg-[#F87B74]",
+          },
+          {
+            bg: "bg-[#E9EAFF]",
+            iconBg: "bg-[#343667]",
+          },
+          {
+            bg: "bg-[#FFF2DE]",
+            iconBg: "bg-[#F5A847]",
+          },
+        ];
+
+        return (
+          <div
+            key={loc.name}
+            className={`flex items-center justify-between rounded-xl p-3 ${styles[idx].bg}`}
+          >
+            {/* Left section */}
+            <div className="flex items-center gap-3">
+              <div
+                className={`h-9 w-9 flex items-center justify-center rounded-full text-white ${styles[idx].iconBg}`}
+              >
+                <Trophy className="h-4 w-4" />
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-gray-900">
+                  {loc.name}
+                </p>
+                <p className="text-xs text-gray-600">
+                  {loc.tasks ?? "—"} tasks completed
+                </p>
+              </div>
+            </div>
+
+            {/* Right section */}
+            <div className="flex items-center gap-1 text-sm font-semibold text-gray-900">
+              <span>{loc.score.toFixed(1)}</span>
+              <span className="text-amber-400">★</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </CardShell>
+);
+
+
 const summaryStats = [
   {
     label: "Total Toilets",
@@ -242,19 +284,19 @@ const summaryStats = [
     icon: MapPin,
     href: "/dashboard/washrooms",
     gradient: {
-      from: "#3b82f6",
-      to: "#93c5fd",
+      from: "#0b0e37ff",  // Darker blue
+      to: "#42444eff",  // Lighter blue
     },
-    trend: { change: "+2.3%", note: "vs last month" },
+    trend: { change: "+2", note: "this week" },
   },
   {
-    label: "Ongoing Tasks",
-    value: "0",
+    label: "Toilets Cleaned",
+    value: "4/18",
     icon: ClipboardList,
     href: "/dashboard/cleaner-activity",
     gradient: {
-      from: "#8b5cf6",
-      to: "#d8b4fe",
+      from: "#0b0e37ff",
+      to: "#42444eff",
     },
     trend: { change: "0", note: "all cleared" },
   },
@@ -264,8 +306,8 @@ const summaryStats = [
     icon: CheckCircle2,
     href: "/dashboard/cleaner-activity",
     gradient: {
-      from: "#22c55e",
-      to: "#86efac",
+      from: "#0b0e37ff",
+      to: "#42444eff",
     },
     trend: { change: "+1", note: "today" },
   },
@@ -275,8 +317,8 @@ const summaryStats = [
     icon: Wrench,
     href: "/dashboard/washrooms",
     gradient: {
-      from: "#fb923c",
-      to: "#fdba74",
+      from: "#0b0e37ff",
+      to: "#42444eff",
     },
     trend: { change: "0 pending", note: "stable" },
   },
@@ -286,8 +328,8 @@ const summaryStats = [
     icon: Users,
     href: "/dashboard/user-management",
     gradient: {
-      from: "#6366f1",
-      to: "#a5b4fc",
+      from: "#0b0e37ff",
+      to: "#42444eff",
     },
     trend: { change: "+3", note: "this week" },
   },
@@ -377,75 +419,70 @@ const sparklinePath = (values, width = 240, height = 80, padding = 8) => {
 
 const statusBadge = (status) => {
   if (status === "completed")
-    return "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100";
-  return "bg-sky-50 text-sky-600 ring-1 ring-sky-100";
+    return "bg-[#FE9697]/10 text-[#FE9697] ring-1 ring-[#FE9697]/20";
+  return "bg-[#62658E]/10 text-[#62658E] ring-1 ring-[#62658E]/20";
 };
 
 export default function DashboardPage() {
   return (
     <>
-      <div className="space-y-5">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold text-indigo-600">Overview</p>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-          <p className="text-sm text-slate-500">
-            Snapshot of toilets, cleaners, and today&apos;s field updates.
-          </p>
+      <div className="space-y-5 bg-[#F0F0FA] p-6">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <p className="text-sm font-semibold text-blue-700">Overview</p>
+            <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+            <p className="text-sm text-gray-500">
+              Snapshot of toilets, cleaners, and today's field updates.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm border border-gray-200 sm:flex">
+            <Sparkles className="h-4 w-4 text-blue-600" />
+            Fresh insights ready
+          </div>
         </div>
-        <div className="hidden items-center gap-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-slate-100 sm:flex">
-          <Sparkles className="h-4 w-4 text-indigo-500" />
-          Fresh insights ready
+
+        <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mb-6">
+          {summaryStats.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="group relative flex flex-col gap-2 overflow-hidden rounded-lg bg-white border border-gray-100 p-3 shadow-sm transition hover:shadow-md cursor-pointer"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`h-8 w-8 flex-shrink-0 rounded-lg flex items-center justify-center`} style={{ background: item.gradient ? `linear-gradient(135deg, ${item.gradient.from} 0%, ${item.gradient.to} 100%)` : '#4A69FF' }}>
+                      <Icon className="h-4 w-4 text-white" strokeWidth={2} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-gray-500">
+                        {item.label}
+                      </p>
+                      <p className="text-lg font-bold text-gray-900">
+                        {item.value}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Column 1: Chart and Activities (Swapped position) */}
+          <div className="space-y-6">
+            <ChartCard />
+            <ActivityCard items={activities} /> 
+          </div>
+          
+          {/* Column 2: Highlights (Swapped position) */}
+          <div>
+            <HighlightsCard locations={topLocations} /> 
+          </div>
         </div>
       </div>
-
-      <section className="grid gap-3 md:grid-cols-3 lg:grid-cols-5">
-        {summaryStats.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-transparent p-4 shadow-sm transition hover:shadow-md cursor-pointer"
-              style={{
-                background: `linear-gradient(to top, ${item.gradient.from} 45%, ${item.gradient.to} 100%)`,
-              }}
-            >
-              <div className="flex items-start gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white border-2 border-black/10 shadow-sm">
-                  <Icon className="h-6 w-6 text-black" strokeWidth={2} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white mb-1">
-                    {item.label}
-                  </p>
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <p className="text-3xl font-bold text-white">
-                      {item.value}
-                    </p>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[11px] font-semibold text-slate-800">
-                      <Activity className="h-3 w-3 text-purple-600" />
-                      {item.trend.change}
-                    </span>
-                  </div>
-                  <p className="text-xs font-medium text-white/90 mt-1">
-                    {item.trend.note}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </section>
-
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2 space-y-4">
-          <ChartCard series={chartSeries} />
-          <HighlightsCard locations={topLocations} />
-        </div>
-        <ActivityCard items={activities} />
-      </section>
-    </div>
 
     <style jsx global>{`
       :root {

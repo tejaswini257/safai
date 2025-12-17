@@ -14,8 +14,7 @@ export default function Header({ onMenuClick }) {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <div className="flex items-center gap-2 text-slate-900">
-            <Building2 className="h-6 w-6 text-indigo-500" />
+          <div className="flex items-center text-slate-900">
             <h1 className="text-lg font-semibold leading-none">
               Nagpur Muncipal Corporation 
             </h1>
