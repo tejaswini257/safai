@@ -6,7 +6,7 @@ export default function ReviewList({ reviews, onToggleResolve, onMarkIssue }) {
       {reviews.map((review) => (
         <div 
           key={review.id} 
-          className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          className="bg-[#F4FBFC] rounded-2xl p-6 shadow-sm border border-[#E6F6F7] hover:shadow-md transition-all"
         >
           <ReviewCard
             review={review}

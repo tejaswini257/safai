@@ -10,17 +10,21 @@ export default function ModeToggle({ value, onChange }) {
       <div className="flex items-center gap-2">
         <button
           onClick={() => onChange("single")}
-          className={`px-3 py-1 rounded-md text-sm ${
-            value === "single" ? "bg-indigo-600 text-white" : "bg-white border border-slate-200"
-          }`}
+          className={`px-4 py-2 rounded-lg text-sm font-medium ${
+            value === "single" 
+              ? "bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] text-white shadow-sm" 
+              : "bg-white border border-[#D1E0E2] text-[#2F3A45] hover:bg-[#F8FAFB]"
+          } transition-colors`}
         >
           Single
         </button>
         <button
           onClick={() => onChange("multiple")}
-          className={`px-3 py-1 rounded-md text-sm ${
-            value === "multiple" ? "bg-indigo-600 text-white" : "bg-white border border-slate-200"
-          }`}
+          className={`px-4 py-2 rounded-lg text-sm font-medium ${
+            value === "multiple" 
+              ? "bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] text-white shadow-sm" 
+              : "bg-white border border-[#D1E0E2] text-[#2F3A45] hover:bg-[#F8FAFB]"
+          } transition-colors`}
         >
           Multiple
         </button>

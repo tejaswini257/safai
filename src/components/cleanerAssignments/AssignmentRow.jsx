@@ -1,7 +1,14 @@
-function Avatar({ name }) {
+function Avatar({ name, role }) {
   const initial = name?.charAt(0).toUpperCase() || "?";
+  const colors = {
+    supervisor: 'bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] text-white',
+    default: 'bg-[#0E7C86] text-white'
+  };
+  
   return (
-    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-semibold">
+    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+      role === 'supervisor' ? colors.supervisor : colors.default
+    }`}>
       {initial}
     </div>
   );
@@ -12,11 +19,11 @@ function RolePill({ role }) {
     "inline-flex px-3 py-1 rounded-full text-[10px] font-medium capitalize";
   if (role === "supervisor") {
     return (
-      <span className={`${base} bg-sky-50 text-sky-700`}>{role}</span>
+      <span className={`${base} bg-[#E6F6F7] text-[#2DB7C4]`}>{role}</span>
     );
   }
   return (
-    <span className={`${base} bg-violet-50 text-violet-700`}>{role}</span>
+    <span className={`${base} bg-[#E6F0FF] text-[#4F7FD9]`}>{role}</span>
   );
 }
 
@@ -25,13 +32,13 @@ function StatusPill({ status }) {
     "inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-medium capitalize";
   if (status === "assigned") {
     return (
-      <span className={`${base} bg-emerald-50 text-emerald-700`}>
+      <span className={`${base} bg-[#E6F6F7] text-[#2DB7C4]`}>
         <span>●</span> assigned
       </span>
     );
   }
   return (
-    <span className={`${base} bg-amber-50 text-amber-700`}>
+    <span className={`${base} bg-[#FEF3E6] text-[#F4B740]`}>
       <span>●</span> unassigned
     </span>
   );
@@ -57,7 +64,7 @@ export default function AssignmentRow({
       <td className="px-2 py-3 text-slate-500">{index}</td>
       <td className="px-4 py-3">
         <div className="flex items-center gap-2">
-          <Avatar name={row.cleanerName} />
+          <Avatar name={row.cleanerName} role={row.role} />
           <div>
             <div className="text-xs font-medium text-slate-900">
               {row.cleanerName}

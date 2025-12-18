@@ -9,8 +9,12 @@ export default function CleanerRow({ cleaner, index, onView, onDelete }) {
             <td className="p-4 align-middle">{index + 1}</td>
             <td className="p-4 align-middle">
                 <div className="flex items-center">
-                    <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center mr-3">{/* avatar */}
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-blue-600"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5z" fill="currentColor" /></svg>
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center mr-3 font-medium text-white ${
+                        cleaner.role === 'supervisor' 
+                            ? 'bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9]' 
+                            : 'bg-[#0E7C86]'
+                    }`}>
+                        {cleaner.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)}
                     </div>
                     <div>
                         <div className="font-semibold">{cleaner.name}</div>

@@ -7,65 +7,53 @@ export default function SummaryCards({
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <button
-        onClick={() => onClickCard("total")}
-        className={`flex items-center justify-between p-4 rounded-xl border text-left shadow-sm transition
-        ${
-          activeStatus === "all"
-            ? "border-indigo-500 bg-indigo-50"
-            : "border-slate-100 bg-white hover:bg-slate-50"
-        }`}
+      {/* Gold / Highlight Card */}
+      <div
+        className="flex items-center justify-between p-6 rounded-2xl bg-[#FFF3E0] border-2 border-[#F4B740] shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+        onClick={() => onClickCard('unassigned')}
       >
         <div>
-          <div className="text-xs text-slate-500">Total</div>
-          <div className="text-2xl font-semibold text-slate-900">
-            {total}
-          </div>
-        </div>
-        <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xl">
-          👥
-        </div>
-      </button>
-
-      <button
-        onClick={() => onClickCard("assigned")}
-        className={`flex items-center justify-between p-4 rounded-xl border text-left shadow-sm transition
-        ${
-          activeStatus === "assigned"
-            ? "border-emerald-500 bg-emerald-50"
-            : "border-slate-100 bg-white hover:bg-slate-50"
-        }`}
-      >
-        <div>
-          <div className="text-xs text-slate-500">Assigned</div>
-          <div className="text-2xl font-semibold text-emerald-600">
-            {assigned}
-          </div>
-        </div>
-        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-xl">
-          ✅
-        </div>
-      </button>
-
-      <button
-        onClick={() => onClickCard("unassigned")}
-        className={`flex items-center justify-between p-4 rounded-xl border text-left shadow-sm transition
-        ${
-          activeStatus === "unassigned"
-            ? "border-amber-500 bg-amber-50"
-            : "border-slate-100 bg-white hover:bg-slate-50"
-        }`}
-      >
-        <div>
-          <div className="text-xs text-slate-500">Unassigned</div>
-          <div className="text-2xl font-semibold text-amber-600">
+          <div className="text-sm font-medium text-[#2F3A45]">Unassigned Cleaners</div>
+          <div className="text-2xl font-bold text-[#2F3A45]">
             {unassigned}
           </div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-xl">
-          🕒
+        <div className="w-10 h-10 rounded-full bg-[#F4B740] flex items-center justify-center text-white text-xl">
+          👥
         </div>
-      </button>
+      </div>
+
+      {/* Blue / Secondary Card */}
+      <div
+        className="flex items-center justify-between p-6 rounded-2xl bg-[#EEF4FF] border-2 border-[#4F7FD9] shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+        onClick={() => onClickCard('assigned')}
+      >
+        <div>
+          <div className="text-sm font-medium text-[#2F3A45]">Assigned Cleaners</div>
+          <div className="text-2xl font-bold text-[#2F3A45]">
+            {assigned}
+          </div>
+        </div>
+        <div className="w-10 h-10 rounded-full bg-[#4F7FD9] flex items-center justify-center text-white text-xl">
+          ✅
+        </div>
+      </div>
+
+      {/* Bronze / Neutral Card */}
+      <div
+        className="flex items-center justify-between p-6 rounded-2xl bg-[#FFF1E8] border-2 border-[#C77C5C] shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+        onClick={() => onClickCard('total')}
+      >
+        <div>
+          <div className="text-sm font-medium text-[#2F3A45]">Total Cleaners</div>
+          <div className="text-2xl font-bold text-[#2F3A45]">
+            {total}
+          </div>
+        </div>
+        <div className="w-10 h-10 rounded-full bg-[#C77C5C] flex items-center justify-center text-white text-xl">
+          📊
+        </div>
+      </div>
     </div>
   );
 }
