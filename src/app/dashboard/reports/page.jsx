@@ -204,29 +204,29 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="space-y-4 bg-[#F0F0FA] p-4 w-full">
+    <div className="space-y-4 bg-white p-4 w-full">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-[#10143A] via-[#353767] to-[#6A6C97] text-white shadow-lg">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] text-white shadow-lg">
               <FileText className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Reports</h1>
-<p className="text-sm text-slate-500 mt-1">
-  Generate and export detailed reports
-</p>
+              <h1 className="text-2xl font-bold text-[#2F3A45]">Reports</h1>
+              <p className="text-sm text-[#6B7280] mt-1">
+                Generate and export detailed reports
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Report Type Selection */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-[#E6F6F7] bg-[#F4FBFC] p-6 shadow-sm">
         <div className="flex items-center gap-2 mb-4">
-          <FileText className="h-5 w-5 text-slate-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Select Report Type</h2>
+          <FileText className="h-5 w-5 text-[#2DB7C4]" />
+          <h2 className="text-lg font-semibold text-[#2F3A45]">Select Report Type</h2>
         </div>
         <CustomDropdown
           label=""
@@ -234,16 +234,16 @@ export default function ReportsPage() {
           options={reportTypes}
           onChange={setReportType}
         />
-        <p className="mt-3 text-sm text-slate-600">
+        <p className="mt-3 text-sm text-[#6B7280]">
           View cleaner tasks with AI scores and compliance
         </p>
       </div>
 
       {/* Filters Section */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-[#E6F6F7] bg-[#F4FBFC] p-6 shadow-sm">
         <div className="flex items-center gap-2 mb-6">
-          <Filter className="h-5 w-5 text-indigo-600" />
-          <h2 className="text-lg font-semibold text-slate-900">Filters</h2>
+          <Filter className="h-5 w-5 text-[#2DB7C4]" />
+          <h2 className="text-lg font-semibold text-[#2F3A45]">Filters</h2>
         </div>
 
         <div className="space-y-4">
@@ -362,27 +362,26 @@ export default function ReportsPage() {
               />
             </div>
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="mt-6 flex items-center gap-3">
-          <button 
-            onClick={handleGenerateReport}
-            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#10143A] via-[#353767] to-[#6A6C97] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200 hover:opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
-          >
-            <FileText className="h-4 w-4 text-white" />
-            Generate Report
-          </button>
-          <button
-            onClick={handleReset}
-            className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            <RefreshCw className="h-4 w-4" />
-            Reset Filters
-          </button>
+          {/* Action Buttons */}
+          <div className="mt-6 flex items-center gap-3">
+            <button 
+              onClick={handleGenerateReport}
+              className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200 hover:opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2DB7C4] focus:ring-offset-2"
+            >
+              <FileText className="h-4 w-4 text-white" />
+              Generate Report
+            </button>
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] px-6 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200 hover:opacity-90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2DB7C4] focus:ring-offset-2"
+            >
+              <RefreshCw className="h-4 w-4 text-white" />
+              Reset Filters
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-

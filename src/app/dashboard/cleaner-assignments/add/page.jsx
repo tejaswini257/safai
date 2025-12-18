@@ -62,126 +62,69 @@ export default function CreateAssignmentsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-surface)] py-8 px-4">
-      <div className="max-w-6xl mx-auto space-y-6">
-        <div className="bg-white rounded-2xl shadow-md border border-[var(--border-subtle)] overflow-hidden">
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-[var(--navy)] px-5 py-4 text-white">
-            <div>
-              <p className="text-sm uppercase tracking-wide text-indigo-100">
-                Assign locations to users
-              </p>
-              <h1 className="text-2xl font-semibold">Create Assignments</h1>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="px-3 py-2 rounded-lg border border-white/20 bg-white/10 text-white text-sm font-semibold hover:bg-white/20 transition"
-              >
-                Back
-              </button>
-              <button
-                onClick={openPreview}
-                className="px-4 py-2 rounded-lg bg-white text-[var(--navy)] text-sm font-semibold shadow-sm hover:bg-slate-100 transition"
-              >
-                Preview &amp; Create
-              </button>
-            </div>
+    <div className="min-h-screen bg-white py-8 px-4">
+      <div className="max-w-5xl mx-auto space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-semibold text-[#2F3A45]">Create Assignments</h1>
+            <p className="text-sm text-[#6B7280]">Assign locations to users</p>
           </div>
 
-          <div className="p-6 space-y-6">
-            <ModeToggle value={mode} onChange={setMode} />
-
-            {/* Role filter bar */}
-            <div className="rounded-xl border border-[var(--border-subtle)] bg-slate-50 p-4">
-              <div className="text-sm font-semibold text-slate-700 mb-3">
-                Filter by Role
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {[
-                  { key: "all", label: "All Roles", count: MOCK_USERS.length },
-                  {
-                    key: "supervisor",
-                    label: "Supervisor",
-                    count: MOCK_USERS.filter((u) => u.role === "supervisor").length,
-                  },
-                  {
-                    key: "cleaner",
-                    label: "Cleaner",
-                    count: MOCK_USERS.filter((u) => u.role === "cleaner").length,
-                  },
-                ].map((opt) => (
-                  <button
-                    key={opt.key}
-                    type="button"
-                    onClick={() => setRoleFilter(opt.key)}
-                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition ${
-                      roleFilter === opt.key
-                        ? opt.key === "all"
-                          ? "bg-[var(--navy)] text-white shadow-sm"
-                          : opt.key === "supervisor"
-                          ? "bg-amber-100 text-amber-800 border border-amber-200 shadow-sm"
-                          : "bg-green-100 text-green-800 border border-green-200 shadow-sm"
-                        : "bg-white text-slate-700 border border-[var(--border-subtle)] hover:bg-slate-50"
-                    }`}
-                  >
-                    {opt.label} ({opt.count})
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="bg-white p-4 rounded-lg border border-[var(--border-subtle)] shadow-sm">
-                  <h3 className="text-sm font-medium text-slate-800 mb-2">
-                    Select Users
-                  </h3>
-                  <UsersTypeahead
-                    available={filteredUsers}
-                    selected={selectedUsers}
-                    onChange={setSelectedUsers}
-                    mode={mode}
-                  />
-                </div>
-
-                <AssignmentOptions
-                  assignmentType={assignmentType}
-                  setAssignmentType={setAssignmentType}
-                  startDate={startDate}
-                  setStartDate={setStartDate}
-                />
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-white p-4 rounded-lg border border-[var(--border-subtle)] shadow-sm">
-                  <h3 className="text-sm font-medium text-slate-800 mb-2">
-                    Select Locations
-                  </h3>
-                  <LocationsPicker
-                    available={MOCK_LOCATIONS}
-                    selected={selectedLocations}
-                    onChange={setSelectedLocations}
-                  />
-                </div>
-                <div className="text-xs text-slate-500">
-                  Tip: Click map markers to preview location, or click items on the left
-                  list to add/remove.
-                </div>
-              </div>
-            </div>
+          <div className="flex items-center gap-3">
+            <Link href="/dashboard/cleaner-assignments">
+              <button className="px-4 py-2 rounded-lg border border-[#D1E0E2] bg-white text-[#2F3A45] text-sm font-medium hover:bg-[#F8FAFB] transition-colors">
+                <span className="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                  </svg>
+                  Back
+                </span>
+              </button>
+            </Link>
+            <button
+              onClick={openPreview}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#2DB7C4] to-[#4F7FD9] text-white text-sm font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#2DB7C4] focus:ring-offset-2 transition-all shadow-sm"
+            >
+              Preview & Create
+            </button>
           </div>
         </div>
 
-        {/* Sticky footer action */}
-        <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={openPreview}
-            className="w-full md:w-auto px-6 py-3 rounded-xl bg-[var(--navy)] text-white font-semibold shadow-md hover:bg-slate-800 transition"
-          >
-            {`Create ${selectedUsers.length * selectedLocations.length || 0} Assignments`}
-          </button>
+        <ModeToggle value={mode} onChange={setMode} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div className="bg-[#F4FBFC] p-6 rounded-2xl border border-[#E6F6F7] shadow-sm">
+              <h3 className="text-sm font-medium text-[#2F3A45] mb-3">Select Users</h3>
+              <UsersTypeahead
+                available={MOCK_USERS}
+                selected={selectedUsers}
+                onChange={setSelectedUsers}
+                mode={mode}
+              />
+            </div>
+
+            <AssignmentOptions
+              assignmentType={assignmentType}
+              setAssignmentType={setAssignmentType}
+              startDate={startDate}
+              setStartDate={setStartDate}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-[#F4FBFC] p-6 rounded-2xl border border-[#E6F6F7] shadow-sm">
+              <h3 className="text-sm font-medium text-[#2F3A45] mb-3">Select Locations</h3>
+              <LocationsPicker
+                available={MOCK_LOCATIONS}
+                selected={selectedLocations}
+                onChange={setSelectedLocations}
+              />
+            </div>
+            <div className="text-xs text-[#6B7280] bg-[#F4FBFC] p-4 rounded-2xl border border-[#E6F6F7] shadow-sm">
+              <span className="font-medium text-[#2F3A45]">Tip:</span> Click map markers to preview location, or click items on the left list to add/remove.
+            </div>
+          </div>
         </div>
       </div>
 
