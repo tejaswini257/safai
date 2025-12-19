@@ -1,21 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ModeToggle from "../../../../components/createAssignment/ModeToggle";
 import UsersTypeahead from "../../../../components/createAssignment/UsersTypeahead";
 import LocationsPicker from "../../../../components/createAssignment/LocationsPicker";
 import AssignmentOptions from "../../../../components/createAssignment/AssignmentOptions";
 import PreviewModal from "../../../../components/createAssignment/PreviewModal";
 import { MOCK_USERS, MOCK_LOCATIONS } from "../../../../data/mockAssignments";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CreateAssignmentsPage() {
+  const router = useRouter();
   const [mode, setMode] = useState("multiple"); // "single" | "multiple"
   const [selectedUsers, setSelectedUsers] = useState([]); // array of user objects
   const [selectedLocations, setSelectedLocations] = useState([]); // array of location objects
   const [assignmentType, setAssignmentType] = useState("many-to-many"); // "many-to-many" | "one-to-one" | "round-robin"
   const [startDate, setStartDate] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [roleFilter, setRoleFilter] = useState("all");
+
+  const filteredUsers = useMemo(() => {
+    if (roleFilter === "all") return MOCK_USERS;
+    return MOCK_USERS.filter((u) => u.role === roleFilter);
+  }, [roleFilter]);
 
   const openPreview = () => {
     // basic validation
