@@ -1,6 +1,7 @@
 "use client";
 
 import { HiOutlineClipboardCheck } from "react-icons/hi";
+import { MdChatBubbleOutline, MdHistory } from "react-icons/md";
 
 export default function TaskReview() {
     return (
@@ -53,17 +54,32 @@ export default function TaskReview() {
                 </div>
             </div>
 
-            {/* Image Previews */}
+            {/* Comment Section (Replaced Attached Evidence) */}
             <div className="space-y-3">
                 <p className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--muted-foreground))] ml-1">
-                    Attached Evidence
+                    Inspection Feedback
                 </p>
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="h-28 rounded-xl bg-[hsl(var(--muted))] border border-[hsl(var(--border))] shadow-inner flex items-center justify-center">
-                        <span className="text-[10px] font-bold text-[hsl(var(--muted-foreground))] uppercase">Before</span>
+                    {/* Before Comment */}
+                    <div className="flex flex-col gap-2 p-4 rounded-xl bg-[hsl(var(--muted))] border border-[hsl(var(--border))] shadow-inner">
+                        <div className="flex items-center gap-1.5 opacity-60">
+                            <MdHistory className="text-sm" />
+                            <span className="text-[10px] font-black uppercase tracking-tighter">Initial Observation</span>
+                        </div>
+                        <p className="text-xs font-bold text-slate-600 italic">
+                            "Floors exhibited visible dust accumulation and trash bins were near capacity."
+                        </p>
                     </div>
-                    <div className="h-28 rounded-xl bg-[hsl(var(--muted))] border border-[hsl(var(--border))] shadow-inner flex items-center justify-center">
-                        <span className="text-[10px] font-bold text-[hsl(var(--muted-foreground))] uppercase">After</span>
+
+                    {/* After Comment */}
+                    <div className="flex flex-col gap-2 p-4 rounded-xl bg-[hsl(var(--muted))] border border-[hsl(var(--border))] shadow-inner">
+                        <div className="flex items-center gap-1.5 text-[hsl(var(--primary))]">
+                            <MdChatBubbleOutline className="text-sm" />
+                            <span className="text-[10px] font-black uppercase tracking-tighter">Post-Cleaning Notes</span>
+                        </div>
+                        <p className="text-xs font-bold text-slate-700">
+                            "All surfaces sanitized. Odor control applied and supply restock completed successfully."
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,49 +1,53 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowLeft, FolderPlus, MapPin } from "lucide-react";
+import { ChevronLeft, FolderPlus, MapPin } from "lucide-react";
 
 export default function AddHierarchyHeader() {
     const router = useRouter();
 
     return (
+        /* UI UPDATE: 
+           Pure white floating card with refined shadow to pop against #F8FAFB background.
+        */
         <div className="rounded-[24px] bg-white border border-slate-100 shadow-sm overflow-hidden relative group">
 
-            {/* Soft background decorative tint matching your UI */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#E6F7F9]/50 blur-3xl rounded-full -mr-10 -mt-10 pointer-events-none" />
+            {/* Subtle background decorative tint for brand identity */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#E6F7F9]/40 blur-3xl rounded-full -mr-10 -mt-10 pointer-events-none" />
 
             <div className="relative z-10 px-8 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
                 {/* Title & Description Section */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-5">
+                    {/* Branded Icon Shield */}
                     <div className="h-12 w-12 rounded-2xl bg-[#E6F7F9] border border-[#D1F0F2] flex items-center justify-center shadow-inner">
-                        <FolderPlus className="h-6 w-6 text-[#007C85]" />
+                        <FolderPlus className="h-6 w-6 text-[#58BECF]" strokeWidth={2.5} />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-black tracking-tight text-[#007C85]">
-                            Create New Hierarchy
+                        <h1 className="text-xl font-black tracking-tight text-[#007C85] uppercase leading-none">
+                            Add New Zone Type
                         </h1>
-                        <p className="flex items-center gap-1.5 mt-0.5 text-xs font-bold uppercase tracking-widest text-[#2D8E97]/70">
-                            <MapPin size={12} />
-                            Define structural nodes & parent mappings
+                        <p className="flex items-center gap-1.5 mt-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <MapPin size={12} className="text-[#58BECF]" />
+                            Configure Workspace Architecture
                         </p>
                     </div>
                 </div>
 
-                {/* Back Button: Themed to match Action column style */}
+                {/* Back Button: Styled as a tactile white button */}
                 <button
                     onClick={() => router.back()}
                     className="
                         flex items-center gap-2 
-                        px-5 py-2.5 rounded-xl 
+                        px-6 py-3 rounded-xl 
                         bg-white border border-slate-200 
-                        text-xs font-black uppercase tracking-widest text-[#5A607F] 
-                        hover:bg-[#F0FAFB] hover:text-[#007C85] hover:border-[#D1F0F2]
+                        text-[10px] font-black uppercase tracking-widest text-[#007C85] 
+                        hover:bg-[#F8FAFB] hover:border-[#58BECF]/30 hover:shadow-md
                         transition-all active:scale-95 shadow-sm
                     "
                 >
-                    <ArrowLeft size={16} strokeWidth={3} />
-                    Back to Registry
+                    <ChevronLeft size={16} strokeWidth={3} />
+                    Back to List
                 </button>
             </div>
         </div>

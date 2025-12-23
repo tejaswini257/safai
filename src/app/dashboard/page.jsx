@@ -39,34 +39,66 @@ const CardShell = ({ title, subtitle, icon, headerRight, children }) => (
 const SummaryCards = () => {
   const cards = [
     {
-      label: "Total Users",
-      value: "50",
+      label: "Total Tolites",
+      value: "18",
       icon: Users,
-      bg: "bg-[#EAF7F8]",
+      bg: "from-[#EAF7F8] to-[#d8f0f2]",
       color: "text-[#2DB7C4]",
+      shadow: "shadow-[0_4px_20px_rgba(45,183,196,0.15)]",
+      hover: "hover:shadow-[0_8px_25px_rgba(45,183,196,0.25)]"
     },
     {
-      label: "New Users",
-      value: "100",
+      label: "Ongoing Tasks",
+      value: "5",
       icon: MessageSquare,
-      bg: "bg-[#EEF4FF]",
+      bg: "from-[#EEF4FF] to-[#dde7ff]",
       color: "text-[#4F7FD9]",
+      shadow: "shadow-[0_4px_20px_rgba(79,127,217,0.15)]",
+      hover: "hover:shadow-[0_8px_25px_rgba(79,127,217,0.25)]"
     },
     {
-      label: "Active Users",
+      label: "Completed Tasks",
       value: "4 / 18",
       icon: CheckCircle2,
-      bg: "bg-[#ECFDF3]",
+      bg: "from-[#ECFDF3] to-[#daf5e8]",
       color: "text-[#10B981]",
+      shadow: "shadow-[0_4px_20px_rgba(16,185,129,0.15)]",
+      hover: "hover:shadow-[0_8px_25px_rgba(16,185,129,0.25)]"
     },
     {
       label: "Total Repairs",
       value: "4",
       icon: Wrench,
-      bg: "bg-[#FFF6E5]",
+      bg: "from-[#FFF6E5] to-[#ffedcc]",
       color: "text-[#F4B740]",
+      shadow: "shadow-[0_4px_20px_rgba(244,183,64,0.15)]",
+      hover: "hover:shadow-[0_8px_25px_rgba(244,183,64,0.25)]"
     },
   ];
+
+  // Animation variants for framer-motion
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

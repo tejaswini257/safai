@@ -27,23 +27,7 @@ export default function TaskSummary() {
                 </div>
             </div>
 
-            {/* FINAL COMMENT CARD */}
-            <div className="rounded-[var(--radius)] bg-[#F4FBFC] border border-[hsl(var(--primary)/0.2)] p-6 transition-all hover:shadow-md">
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-white rounded-lg shadow-sm">
-                        <HiOutlineChatAlt2 className="text-[hsl(var(--primary-dark))] text-xl" />
-                    </div>
-                    <h3 className="font-extrabold tracking-tight text-[hsl(var(--primary-dark))]">
-                        Final Comment
-                    </h3>
-                </div>
 
-                <div className="bg-white/60 rounded-xl p-3 border border-white/40">
-                    <p className="text-sm font-medium text-[hsl(var(--primary-dark))] italic">
-                        "mostly clean"
-                    </p>
-                </div>
-            </div>
 
         </div>
     );

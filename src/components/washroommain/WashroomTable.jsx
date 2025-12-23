@@ -107,10 +107,7 @@ export default function WashroomTable({ items }) {
                 <p className="text-xs font-bold text-[hsl(var(--muted-foreground))] uppercase tracking-widest">
                     Showing {rows.length} Total Facilities
                 </p>
-                <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span className="text-[10px] font-bold text-emerald-600 uppercase">Live Data Feed</span>
-                </div>
+
             </div>
         </div>
     );

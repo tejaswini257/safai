@@ -209,23 +209,27 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
         ))}
       </div>
 
-      {/* FOOTER */}
+      {/* FOOTER - Updated with Profile Link */}
       <div className="border-t border-[#EAF2F5] p-4 bg-white">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="h-9 w-9 rounded-full bg-[#EAF7F8] flex items-center justify-center font-semibold text-[#2DB7C4]">
+        <Link
+          href="/dashboard/profile"
+          onClick={onClose}
+          className="flex items-center gap-3 mb-3 p-1.5 rounded-xl hover:bg-slate-50 transition-all group cursor-pointer"
+        >
+          <div className="h-9 w-9 rounded-full bg-[#EAF7F8] flex items-center justify-center font-black text-[#2DB7C4] group-hover:scale-110 transition-transform">
             TI
           </div>
           {!collapsed && (
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-[#2F3A45]">Test Intern</p>
-              <p className="text-xs text-[#6B7280]">Admin</p>
+            <div className="flex-1 overflow-hidden">
+              <p className="text-sm font-bold text-[#2F3A45] truncate group-hover:text-[#2DB7C4] transition-colors">Test Intern</p>
+              <p className="text-[10px] font-bold text-[#9CA3AF] uppercase tracking-tighter">Admin Account</p>
             </div>
           )}
-          {!collapsed && <Settings className="h-5 w-5 text-[#9CA3AF]" />}
-        </div>
+          {!collapsed && <Settings className="h-4 w-4 text-[#9CA3AF] group-hover:rotate-45 transition-transform" />}
+        </Link>
 
-        <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#EAF2F5] px-3 py-2 text-sm font-semibold text-[#2F3A45] hover:bg-[#F0F9FA]">
-          <LogOut className="h-4 w-4" />
+        <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#EAF2F5] px-3 py-2 text-sm font-semibold text-[#2F3A45] hover:bg-rose-50 hover:text-rose-600 hover:border-rose-100 transition-all group">
+          <LogOut className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
           {!collapsed && "Logout"}
         </button>
       </div>
