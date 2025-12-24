@@ -77,7 +77,10 @@ export default function CreateHierarchyForm() {
                     </button>
 
                     {/* Submit */}
-                    <button className="flex-[2] flex items-center justify-center gap-2 rounded-xl bg-[#007C85] px-6 py-3.5 text-xs font-black text-white uppercase tracking-widest shadow-[0_10px_20px_rgba(0,124,133,0.2)] hover:bg-[#2D8E97] transition-all active:scale-95">
+                    <button 
+                        className="flex-[2] flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-xs font-black text-white uppercase tracking-widest shadow-[0_10px_20px_rgba(0,124,133,0.2)] hover:opacity-90 transition-all active:scale-95"
+                        style={{ background: 'linear-gradient(to right, #58BECF, #6D9CDC)' }}
+                    >
                         <Check size={16} />
                         Create Location Hierarchy
                     </button>

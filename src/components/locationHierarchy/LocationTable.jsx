@@ -24,7 +24,7 @@ export default function LocationTable() {
 
             {/* Header: Teal Aesthetic matching the screenshot */}
             <div className="overflow-x-auto">
-                <table className="w-full text-sm border-separate border-spacing-0">
+                <table className="w-full text-sm border-collapse">
                     <thead>
                         <tr className="bg-[#E6F7F9]">
                             <th className="px-6 py-4 text-left">
@@ -56,9 +56,9 @@ export default function LocationTable() {
                         </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-slate-50">
+                    <tbody>
                         {locations.map((loc) => (
-                            <tr key={loc.id} className="hover:bg-slate-50/50 transition-colors group">
+                            <tr key={loc.id} className="hover:bg-slate-50/50 transition-colors group border-b border-slate-100 last:border-0">
                                 {/* Serial No */}
                                 <td className="px-6 py-5 text-[#5A607F] font-medium text-center sm:text-left">
                                     {loc.id}

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import {
   Activity,
   CheckCircle2,
@@ -14,17 +15,17 @@ import { WashroomCleanlinessChart, CleanerPerformanceChart } from "@/components/
 
 /* ------------------ CARD SHELL ------------------ */
 const CardShell = ({ title, subtitle, icon, headerRight, children }) => (
-  <div className="bg-white rounded-2xl border border-[#EEF2F5] shadow-[0_10px_30px_rgba(15,23,42,0.06)] p-5">
+  <div className="bg-card text-card-foreground rounded-2xl border border-border/50 shadow-sm p-5">
     <div className="flex items-center justify-between mb-4">
       <div className="flex items-center gap-3">
         {icon}
         <div>
           {subtitle && (
-            <p className="text-xs font-semibold text-[#2DB7C4]">
+            <p className="text-xs font-semibold text-primary">
               {subtitle}
             </p>
           )}
-          <h3 className="text-base font-semibold text-[#2F3A45]">
+          <h3 className="text-base font-semibold text-foreground">
             {title}
           </h3>
         </div>
@@ -42,29 +43,37 @@ const SummaryCards = () => {
       label: "Total Users",
       value: "50",
       icon: Users,
-      bg: "bg-[#EAF7F8]",
-      color: "text-[#2DB7C4]",
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#1E2A3A]",
+      border: "border border-[#2DB7C4]/20",
+      text: "text-[#2DB7C4]",
+      iconBg: "bg-[#2DB7C4]/10"
     },
     {
       label: "New Users",
       value: "100",
       icon: MessageSquare,
-      bg: "bg-[#EEF4FF]",
-      color: "text-[#4F7FD9]",
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#1E1A3A]",
+      border: "border border-[#9F7AEA]/20",
+      text: "text-[#9F7AEA]",
+      iconBg: "bg-[#9F7AEA]/10"
     },
     {
       label: "Active Users",
       value: "4 / 18",
       icon: CheckCircle2,
-      bg: "bg-[#ECFDF3]",
-      color: "text-[#10B981]",
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#1A3A2A]",
+      border: "border border-[#48BB78]/20",
+      text: "text-[#48BB78]",
+      iconBg: "bg-[#48BB78]/10"
     },
     {
       label: "Total Repairs",
       value: "4",
       icon: Wrench,
-      bg: "bg-[#FFF6E5]",
-      color: "text-[#F4B740]",
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#3A2A1A]",
+      border: "border border-[#F4B740]/20",
+      text: "text-[#F4B740]",
+      iconBg: "bg-[#F4B740]/10"
     },
   ];
 
@@ -75,19 +84,19 @@ const SummaryCards = () => {
         return (
           <div
             key={card.label}
-            className="bg-white rounded-xl border border-[#EEF2F5] px-4 py-3 shadow-sm"
+            className={`${card.bg} ${card.border} rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition-all duration-200`}
           >
             <div className="flex items-center gap-3">
               <div
-                className={`h-8 w-8 rounded-lg ${card.bg} flex items-center justify-center`}
+                className={`h-8 w-8 rounded-lg ${card.iconBg} flex items-center justify-center`}
               >
-                <Icon className={`h-4 w-4 ${card.color}`} />
+                <Icon className={`h-4 w-4 ${card.text}`} />
               </div>
               <div>
-                <p className="text-lg font-semibold text-[#2F3A45] leading-tight">
+                <p className={`text-lg font-semibold text-white leading-tight`}>
                   {card.value}
                 </p>
-                <p className="text-xs text-[#6B7280]">
+                <p className="text-xs text-gray-300">
                   {card.label}
                 </p>
               </div>
@@ -102,9 +111,24 @@ const SummaryCards = () => {
 /* ------------------ TOP RATED ------------------ */
 const HighlightsCard = ({ locations }) => {
   const rankStyles = [
-    { bg: "bg-[#FFF6E5]", badge: "bg-[#F4B740] text-white" },
-    { bg: "bg-[#EEF4FF]", badge: "bg-[#4F7FD9] text-white" },
-    { bg: "bg-[#FFF1E8]", badge: "bg-[#C77C5C] text-white" },
+    { 
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#2A2D3D]", 
+      border: "border border-[#49B8D3]/20",
+      text: "text-[#49B8D3]",
+      badge: "bg-[#49B8D3] text-white" 
+    },
+    { 
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#2D2A3D]", 
+      border: "border border-[#9F7AEA]/20",
+      text: "text-[#9F7AEA]",
+      badge: "bg-[#9F7AEA] text-white" 
+    },
+    { 
+      bg: "bg-gradient-to-br from-[#1A1C26] to-[#2A3D3A]", 
+      border: "border border-[#48BB78]/20",
+      text: "text-[#48BB78]",
+      badge: "bg-[#48BB78] text-white" 
+    },
   ];
 
   return (
@@ -120,7 +144,7 @@ const HighlightsCard = ({ locations }) => {
         {locations.slice(0, 3).map((loc, i) => (
           <div
             key={loc.name}
-            className={`flex items-center justify-between rounded-xl px-4 py-3 ${rankStyles[i].bg}`}
+            className={`flex items-center justify-between rounded-xl px-4 py-3 ${rankStyles[i].bg} ${rankStyles[i].border} shadow-sm hover:shadow-md transition-all duration-200`}
           >
             <div className="flex items-center gap-3">
               <div
@@ -128,11 +152,11 @@ const HighlightsCard = ({ locations }) => {
               >
                 {i + 1}
               </div>
-              <p className="text-sm font-medium text-[#2F3A45]">
+              <p className={`text-sm font-medium ${rankStyles[i].text}`}>
                 {loc.name}
               </p>
             </div>
-            <span className="text-sm font-semibold text-[#2F3A45]">
+            <span className={`text-sm font-semibold ${rankStyles[i].text}`}>
               ⭐ {loc.score}
             </span>
           </div>
@@ -199,23 +223,26 @@ const activities = [
 /* ------------------ PAGE ------------------ */
 export default function DashboardPage() {
   return (
-    <div className="bg-white p-6 space-y-6">
+    <div className="min-h-screen p-6 space-y-6 bg-background">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <p className="text-sm font-semibold text-[#2DB7C4]">
+          <p className="text-sm font-semibold text-primary">
             Overview
           </p>
-          <h1 className="text-2xl font-bold text-[#2F3A45]">
+          <h1 className="text-2xl font-bold text-foreground">
             Dashboard
           </h1>
-          <p className="text-sm text-[#6B7280]">
+          <p className="text-sm text-muted-foreground">
             Snapshot of toilets, cleaners and field updates
           </p>
         </div>
-        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-[#EEF2F5] text-sm text-[#2F3A45]">
-          <Sparkles className="h-4 w-4 text-[#2DB7C4]" />
-          Fresh insights ready
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-card text-foreground px-4 py-2 rounded-full border border-border text-sm">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Fresh insights ready
+          </div>
+          <ThemeToggle />
         </div>
       </div>
 

@@ -62,25 +62,33 @@ export default function CleanerAssignmentsPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFB] py-8 px-8 text-left">
-      <div className="max-w-7xl mx-auto space-y-8">
-
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* 1. Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="text-left">
-            <h1 className="text-3xl font-bold text-slate-800 tracking-tight leading-none uppercase">
-              Cleaner Assignments
-            </h1>
-            <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mt-2">
-              System Personnel Mapping Registry
-            </p>
+        <div className="bg-[#e6f7f9] rounded-xl p-6 border border-gray-100 shadow-sm">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <div className="flex items-center">
+                <h1 className="text-2xl font-bold text-[#007c85] uppercase tracking-wide">CLEANER ASSIGNMENTS</h1>
+              </div>
+              <div className="mt-1 flex items-center text-sm">
+                <span className="text-[#71b5bb]">System Personnel</span>
+                <span className="mx-2 text-[#71b5bb]">/</span>
+                <span className="text-[#71b5bb]">Mapping Registry</span>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
+              <Link 
+                href="/dashboard/cleaner-assignments/add"
+                className="w-full sm:w-auto"
+              >
+                <button className="w-full flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg hover:opacity-90 transition-opacity">
+                  <Plus size={18} className="h-4 w-4" />
+                  Add Cleaner
+                </button>
+              </Link>
+            </div>
           </div>
-          <Link
-            href="/dashboard/cleaner-assignments/add"
-            style={{ background: 'linear-gradient(to right, #58BECF, #6D9CDC)' }}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-[11px] font-bold uppercase tracking-widest shadow-lg shadow-cyan-500/20 hover:brightness-105 active:scale-95 transition-all"
-          >
-            <Plus size={16} strokeWidth={3} /> Add Cleaner
-          </Link>
         </div>
 
         {/* 2. Summary Cards */}
@@ -130,75 +138,79 @@ export default function CleanerAssignmentsPage() {
         </div>
 
         {/* 4. Main Data Table */}
-        <div className="bg-white rounded-[24px] border border-slate-100 shadow-xl shadow-slate-200/20 overflow-hidden">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-0">
+            <table className="min-w-full">
               <thead>
-                <tr className="bg-[#E0F7FA]">
-                  <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-wider text-[#00838F] border-b border-cyan-100">
-                    <div className="flex items-center gap-2"><Users size={14} strokeWidth={2.5} /> Cleaner</div>
+                <tr className="bg-white">
+                  <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    Cleaner
                   </th>
-                  <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-wider text-[#00838F] border-b border-cyan-100">
-                    <div className="flex items-center gap-2"><MapPin size={14} strokeWidth={2.5} /> Location</div>
+                  <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    Location
                   </th>
-                  <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-wider text-[#00838F] border-b border-cyan-100">
-                    <div className="flex items-center gap-2"><Shield size={14} strokeWidth={2.5} /> Role</div>
+                  <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    Role
                   </th>
-                  <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-wider text-[#00838F] border-b border-cyan-100">
-                    <div className="flex items-center gap-2"><Activity size={14} strokeWidth={2.5} /> Status</div>
+                  <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    Status
                   </th>
-                  <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-wider text-[#00838F] border-b border-cyan-100">
-                    <div className="flex items-center gap-2"><LayoutList size={14} strokeWidth={2.5} /> Assigned On</div>
+                  <th className="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    Assigned On
                   </th>
-                  <th className="px-8 py-5 text-right text-[10px] font-bold uppercase tracking-wider text-[#00838F] border-b border-cyan-100">
-                    <div className="flex items-center justify-end gap-2"><Settings size={14} strokeWidth={2.5} /> Action</div>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                    Action
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50">
+              <tbody className="divide-y divide-[#E5F6F8]">
                 {pageItems.map((item) => (
-                  <tr key={item.id} className="hover:bg-[#F4FBFC]/60 transition-colors">
-                    <td className="px-6 py-5">
+                  <tr key={item.id} className="hover:bg-[#F7FCFD] transition-colors">
+                    <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="h-9 w-9 rounded-full bg-white border border-cyan-100 text-[#00838F] flex items-center justify-center font-bold text-[11px] shadow-sm">
+                        <div className="h-10 w-10 rounded-full bg-white border border-[#D1F0F2] text-[#007C85] flex items-center justify-center font-semibold text-sm shadow-sm">
                           {item.cleanerName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
                         </div>
-                        <div className="text-left">
-                          <p className="text-sm font-semibold text-slate-700 leading-none mb-1">{item.cleanerName}</p>
-                          <p className="text-[10px] font-medium text-slate-400">{item.cleanerEmail}</p>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{item.cleanerName}</p>
+                          <p className="text-xs text-[#71B5BB]">{item.cleanerEmail}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-5">
-                      <p className="text-sm font-semibold text-[#007C85] hover:text-[#58BECF] transition-colors cursor-pointer">
+                    <td className="px-6 py-4">
+                      <p className="text-sm font-medium text-[#007C85]">
                         {item.locationName}
                       </p>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${item.role === 'Supervisor' ? 'bg-blue-50 border-blue-100 text-blue-500' : 'bg-teal-50 border-teal-100 text-teal-600'
-                        }`}>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1.5 text-xs font-medium rounded-lg border ${
+                        item.role === 'Supervisor' 
+                          ? 'bg-blue-50 border-blue-100 text-blue-600' 
+                          : 'bg-[#E5F6F8] border-[#D1F0F2] text-[#007C85]'
+                      }`}>
                         {item.role}
                       </span>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${item.status === 'Assigned' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' : 'bg-rose-50 border-rose-100 text-rose-400'
-                        }`}>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1.5 text-xs font-medium rounded-lg border ${
+                        item.status === 'Assigned' 
+                          ? 'bg-emerald-50 border-emerald-100 text-emerald-600' 
+                          : 'bg-amber-50 border-amber-100 text-amber-600'
+                      }`}>
                         {item.status}
                       </span>
                     </td>
-                    <td className="px-6 py-5 text-sm font-medium text-slate-400">
+                    <td className="px-6 py-4 text-sm text-gray-500">
                       {item.assignedOn}
                     </td>
-                    <td className="px-8 py-5 text-right">
-                      <div className="flex justify-end">
-                        <button
-                          onClick={() => handleDelete(item.id)}
-                          className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all"
-                          title="Delete Assignment"
-                        >
-                          <Trash2 size={18} strokeWidth={2} />
-                        </button>
-                      </div>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Delete Assignment"
+                      >
+                        <Trash2 size={18} strokeWidth={2} />
+                      </button>
                     </td>
                   </tr>
                 ))}

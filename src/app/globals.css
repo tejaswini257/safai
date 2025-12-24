@@ -2,150 +2,252 @@
 @tailwind components;
 @tailwind utilities;
 
-/* =====================================
-   🌿 BASE THEME VARIABLES (TAILWIND)
-===================================== */
+/* =====================================================
+   🌗 THEME TOKENS
+===================================================== */
 @layer base {
   :root {
-    --primary: 190 84% 42%;
-    --primary-dark: 184 100% 26%;
-    --primary-light: 187 100% 94%;
-    --secondary: 222 60% 58%;
-    --accent: 39 90% 59%;
-
     --background: 0 0% 100%;
-    --foreground: 218 24% 21%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --border: 214 32% 91%;
     --muted: 210 20% 98%;
     --muted-foreground: 215 16% 47%;
 
-    --border: 210 20% 96%;
-    --input: 210 20% 96%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 218 24% 21%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
+    --primary: 190 84% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary-foreground: 0 0% 100%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 190 84% 42%;
-    --radius: 0.5rem;
   }
 
+  /* 🌙 DARK MODE — FORCE SAFE */
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --background: 225 15% 7%;        /* #0D0E14 */
+    --foreground: 0 0% 100%;         /* white */
+
+    --card: 230 18% 13%;             /* #1A1C26 */
+    --card-foreground: 0 0% 100%;
+
+    --border: 230 16% 18%;            /* #252836 */
+    --muted: 230 18% 16%;
+    --muted-foreground: 220 10% 70%;  /* #9BA1B0 */
+
+    --primary: 195 58% 55%;           /* #49B8D3 */
+    --primary-foreground: 0 0% 100%;
+
+    --sidebar-bg: 225 15% 7%;
+  }
+}
+
+/* =====================================================
+   🌍 BASE RESET
+===================================================== */
+@layer base {
+  html,
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
   }
 
   * {
     border-color: hsl(var(--border));
   }
+
+  h1, h2, h3, h4, h5, h6,
+  p, span, label, small {
+    color: hsl(var(--foreground));
+  }
 }
 
-/* =====================================
-   🌿 UTILITY CLASSES
-===================================== */
-.bg-gradient-primary {
-  background: linear-gradient(to right,
-      hsl(var(--primary)),
-      hsl(var(--secondary)));
+/* =====================================================
+   🧱 CORE COMPONENTS
+===================================================== */
+@layer components {
+
+  .card {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border: 1px solid hsl(var(--border));
+    border-radius: 14px;
+  }
+
+  .dark .card {
+    box-shadow: 0 14px 40px rgba(0,0,0,0.65);
+  }
+
+  header,
+  .header,
+  .topbar {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  .sidebar {
+    background-color: hsl(var(--sidebar-bg));
+    color: hsl(var(--foreground));
+  }
 }
 
-.text-gradient {
-  background: linear-gradient(to right,
-      hsl(var(--primary)),
-      hsl(var(--secondary)));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* =====================================================
+   🔥 FORCE DARK MODE CONSISTENCY (KEY FIX)
+===================================================== */
 
-.border-primary {
-  border-color: hsl(var(--primary));
-}
-
-.bg-primary-light {
-  background-color: hsla(var(--primary) / 0.1);
-}
-
-/* =====================================
-   🌿 GEN-Z PASTEL SAAS THEME (OPTIONAL)
-===================================== */
-.theme-genz {
-  --bg-gradient: linear-gradient(135deg, #eaf6f7, #f5fbfc);
-  --card-bg: #ffffff;
-  --card-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-  --text: #1f2937;
-  --muted-text: #6b7280;
-  background: var(--bg-gradient);
-}
-
-/* =====================================
-   🌿 SAAS DASHBOARD THEME
-===================================== */
-.theme-saas {
-  --bg-gradient: linear-gradient(135deg, #e9f7f6, #eaf3fb);
-  --card-bg: #ffffff;
-  --card-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
-  --text: #1f2937;
-  --muted-text: #6b7280;
-  background: var(--bg-gradient);
-}
-
-/* =====================================
-   🌿 BASE BODY STYLES
-===================================== */
-body {
-  background-color: hsl(var(--background));
+/* Ensure all containers dark - Expanded coverage */
+.dark div,
+.dark section,
+.dark article,
+.dark aside,
+.dark main,
+.dark header,
+.dark footer,
+.dark nav,
+.dark form,
+.dark fieldset,
+.dark dialog,
+.dark details,
+.dark summary {
+  background-color: transparent;
   color: hsl(var(--foreground));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-@layer utilities {
-
-  /* Utility class for the branded gradient button */
-  .btn-gradient {
-    background: linear-gradient(to right, #58BECF, #6D9CDC) !important;
-    color: #FFFFFF !important;
-    transition: all 0.3s ease;
-  }
-
-  /* Optional: Hover effect for better UX */
-  .btn-gradient:hover {
-    filter: brightness(105%);
-    box-shadow: 0 4px 15px rgba(88, 190, 207, 0.3);
-  }
-
-  /* Optional: Active/Pressed effect */
-  .btn-gradient:active {
-    transform: scale(0.98);
-  }
+/* Kill ALL light backgrounds - Expanded coverage */
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-neutral-50,
+.dark .bg-neutral-100,
+.dark .bg-opacity-10,
+.dark [style*="background: #fff"],
+.dark [style*="background-color: #fff"],
+.dark [style*="background: #f8fafc"],
+.dark [style*="background-color: #f8fafc"],
+.dark [style*="background:#EAFBFD"] {
+  background-color: hsl(var(--card)) !important;
 }
 
-/* If you want to apply this to EVERY button in the app by default: */
-/*
-@layer base {
-  button:not(.secondary-btn) {
-    background: linear-gradient(to right, #58BECF, #6D9CDC);
-    color: #FFFFFF;
-    border-radius: 0.75rem;
-  }
+/* Fix text colors - Enhanced for better visibility */
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-muted-foreground,
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-slate-500,
+.dark .text-slate-400 {
+  color: hsl(var(--muted-foreground)) !important;
 }
-*/
+
+/* Force specific text colors for better visibility */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+.dark p, .dark span, .dark div, .dark label,
+.dark .text-foreground,
+.dark .text-primary-foreground {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Inputs & forms - Enhanced for better visibility */
+.dark input,
+.dark select,
+.dark textarea,
+.dark .input,
+.dark .form-input,
+.dark .form-select,
+.dark .form-textarea {
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-color: hsl(var(--border)) !important;
+  caret-color: hsl(var(--primary)) !important;
+}
+
+/* Placeholder text */
+.dark ::placeholder,
+.dark :-ms-input-placeholder,
+.dark ::-ms-input-placeholder {
+  color: hsl(var(--muted-foreground) / 0.8) !important;
+  opacity: 1;
+}
+
+/* Tables - Enhanced for better visibility */
+.dark table,
+.dark thead,
+.dark tbody,
+.dark tr,
+.dark th,
+.dark td,
+.dark .table,
+.dark .table th,
+.dark .table td {
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+/* Table headers */
+.dark th,
+.dark thead th,
+.dark thead td {
+  background-color: hsl(var(--muted)) !important;
+  color: hsl(var(--foreground)) !important;
+  font-weight: 600;
+}
+
+/* Table rows */
+.dark tr:hover,
+.dark tbody tr:hover {
+  background-color: hsl(var(--muted) / 0.5) !important;
+}
+
+/* Buttons - Enhanced for better visibility */
+.dark button,
+.dark .btn,
+.dark .button {
+  color: hsl(var(--foreground)) !important;
+  background-color: hsl(var(--card)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+.dark button.primary,
+.dark .btn-primary,
+.dark .button-primary {
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border-color: hsl(var(--primary)) !important;
+}
+
+.dark button:hover,
+.dark .btn:hover,
+.dark .button:hover {
+  opacity: 0.9;
+  background-color: hsl(var(--muted)) !important;
+}
+
+/* =====================================================
+   🖱 SCROLLBAR
+===================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+  border-radius: 6px;
+}
+
+/* =====================================================
+   ✨ ANIMATION
+===================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-in-out;
+}

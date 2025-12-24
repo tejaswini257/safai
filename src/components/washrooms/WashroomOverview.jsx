@@ -35,78 +35,76 @@ export default function WashroomOverview({ washroom = MOCK_WASHROOM }) {
   };
 
   return (
-    <div className="space-y-6 pb-10">
-      {/* Top card with image and details */}
-      <div className="bg-white rounded-[var(--radius)] shadow-sm border border-[hsl(var(--border))] overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-[300px_minmax(0,1fr)] gap-0">
-          <div className="relative h-64 md:h-full min-h-[250px] bg-[hsl(var(--muted))]">
+    <div className="space-y-6 pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
+        <div className="md:flex">
+          {/* Image */}
+          <div className="relative h-56 md:w-1/3 md:h-auto">
             <Image
               src="/image/dashboard img.png"
               alt={washroom.name}
               fill
-              className="object-cover"
+              className="object-cover rounded-l-xl"
               priority
             />
+            <div className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 px-3 py-1 rounded-full">
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <span className="text-xs font-medium text-gray-700">Active</span>
+            </div>
           </div>
-          <div className="p-6 space-y-6">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div className="space-y-1">
-                <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-[hsl(var(--primary-dark))]">
-                  {washroom.name}
-                </h1>
-                <div className="flex items-center gap-2 text-sm font-medium text-[hsl(var(--muted-foreground))]">
-                  <MapPin className="h-4 w-4 text-[hsl(var(--primary))]" />
-                  <span>{washroom.subtitle}</span>
-                </div>
+
+          {/* Details */}
+          <div className="p-6 md:w-2/3">
+            <h1 className="text-xl font-bold text-gray-900 mb-1">{washroom.name}</h1>
+            <div className="flex items-center text-gray-600 text-sm mb-4">
+              <MapPin className="h-4 w-4 mr-1.5 text-blue-500" />
+              {washroom.subtitle}
+            </div>
+
+            {/* Quick Info Grid */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <p className="text-xs font-medium text-gray-500 mb-1">Zone</p>
+                <p className="text-sm font-medium">{washroom.zone}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium text-gray-500 mb-1">City</p>
+                <p className="text-sm font-medium">{washroom.city}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium text-gray-500 mb-1">State</p>
+                <p className="text-sm font-medium">{washroom.state}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium text-gray-500 mb-1">Pincode</p>
+                <p className="text-sm font-medium">{washroom.pincode}</p>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <div className="rounded-xl border border-[hsl(var(--primary)/0.2)] bg-[#E0F7FA] px-4 py-3">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[hsl(var(--primary-dark))] mb-1">
-                  Location Hierarchy / Zone
-                </div>
-                <div className="text-sm font-bold text-[hsl(var(--primary-dark))]">
-                  {washroom.zone}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-x-6 gap-y-2 py-2">
-                {[
-                  { label: "City", value: washroom.city },
-                  { label: "State", value: washroom.state },
-                  { label: "Pincode", value: washroom.pincode },
-                  { label: "Created", value: washroom.createdOn },
-                ].map((item) => (
-                  <div key={item.label} className="text-xs">
-                    <span className="text-[hsl(var(--muted-foreground))] font-bold uppercase tracking-tighter mr-1">{item.label}:</span>
-                    <span className="text-[hsl(var(--foreground))] font-semibold">{item.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-3 pt-2">
+            {/* Actions */}
+            <div className="flex flex-wrap gap-3 mt-2">
               <button
-                type="button"
                 onClick={handleLocate}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[hsl(var(--primary)/0.2)] bg-white text-[hsl(var(--primary-dark))] text-sm font-bold hover:bg-teal-50 transition-all active:scale-95 shadow-sm"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
               >
                 <Map className="h-4 w-4" />
-                Locate on Map
+                View on Map
               </button>
-
-              <Link href={`/dashboard/washrooms/${washroom.id}/edit`}>
-                <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[hsl(var(--primary))] text-white text-sm font-bold hover:brightness-110 transition-all active:scale-95 shadow-[0_4px_14px_0_rgba(45,183,196,0.3)]">
+              
+              <Link 
+                href={`/dashboard/washrooms/${washroom.id}/edit`}
+                className="flex-1"
+              >
+                <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg hover:opacity-90 transition-opacity">
                   <Pencil className="h-4 w-4" />
                   Edit Details
                 </button>
               </Link>
-
+              
               <button
-                type="button"
                 onClick={handleDelete}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-rose-200 bg-white text-rose-600 text-sm font-bold hover:bg-rose-50 transition-all active:scale-95"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
               >
                 <Trash2 className="h-4 w-4" />
                 Delete
@@ -116,17 +114,23 @@ export default function WashroomOverview({ washroom = MOCK_WASHROOM }) {
         </div>
       </div>
 
-      {/* Amenities section */}
-      <div className="bg-white rounded-[var(--radius)] border border-[hsl(var(--border))] shadow-sm p-6 space-y-4">
-        <h2 className="text-sm font-extrabold uppercase tracking-widest text-[hsl(var(--muted-foreground))] flex items-center gap-2">
-          <CheckCircle className="h-4 w-4 text-[hsl(var(--primary))]" />
+      {/* Amenities Section */}
+      <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+        <h2 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <CheckCircle className="h-5 w-5 text-blue-500" />
           Amenities & Features
         </h2>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3">
           {washroom.amenities.map((a) => (
             <span
               key={a}
-              className="px-4 py-1.5 rounded-xl bg-[#F4FBFC] text-[hsl(var(--primary-dark))] font-bold text-xs border border-[hsl(var(--primary)/0.1)]"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-[#D1F0F2]"
+              style={{
+                backgroundColor: '#E5F6F8',
+                color: '#007C85',
+                borderColor: '#B8E6EB',
+                transition: 'all 0.2s ease'
+              }}
             >
               {a}
             </span>
@@ -134,31 +138,114 @@ export default function WashroomOverview({ washroom = MOCK_WASHROOM }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Assigned users */}
-        <div className="bg-white rounded-[var(--radius)] border border-[hsl(var(--border))] shadow-sm p-6">
-          <h2 className="text-sm font-extrabold uppercase tracking-widest text-[hsl(var(--muted-foreground))] mb-4 flex items-center gap-2">
-            <Users className="h-4 w-4 text-[hsl(var(--primary))]" />
-            Assigned Users
-          </h2>
-          <div className="flex items-center justify-center py-6 border-2 border-dashed border-[hsl(var(--border))] rounded-xl">
-            <p className="text-xs font-medium text-[hsl(var(--muted-foreground))] italic">No staff currently assigned to this location.</p>
+      {/* Staff & Stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-2">
+        {/* Assigned Staff */}
+        <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-semibold text-gray-900">Assigned Staff</h2>
+            <button className="text-sm font-medium text-blue-600 hover:underline">
+              Manage Staff
+            </button>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-6 border-2 border-dashed border-gray-200 text-center">
+            <Users className="h-8 w-8 mx-auto text-gray-300 mb-3" />
+            <p className="text-sm text-gray-600 mb-1">No staff assigned yet</p>
+            <p className="text-xs text-gray-500 max-w-xs mx-auto mb-4">
+              Assign staff members to manage this washroom facility
+            </p>
+            <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors">
+              Assign Staff
+            </button>
           </div>
         </div>
 
-        {/* Review statistics */}
-        <div className="bg-white rounded-[var(--radius)] border border-[hsl(var(--border))] shadow-sm p-6 space-y-4">
-          <h2 className="text-sm font-extrabold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">Review Statistics</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-xl bg-[#F4FBFC] border border-[hsl(var(--primary)/0.1)] p-4">
-              <p className="text-[10px] font-bold text-[hsl(var(--primary-dark))] uppercase tracking-tighter mb-1">User Rating</p>
-              <p className="text-2xl font-black text-[hsl(var(--primary-dark))]">N/A</p>
-              <p className="text-[10px] font-bold text-[hsl(var(--muted-foreground))]">0 User Reviews</p>
+        {/* Performance */}
+        <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+          <h2 className="text-base font-semibold text-gray-900 mb-4">Performance</h2>
+          
+          <div className="space-y-4">
+            {/* User Rating */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-medium text-gray-500">User Rating</span>
+                <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full font-medium">0 Reviews</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-gray-900">N/A</span>
+                <span className="text-sm text-gray-500">/ 5</span>
+              </div>
+              <div className="h-1.5 bg-gray-100 rounded-full mt-2 overflow-hidden">
+                <div className="h-full bg-blue-500 rounded-full w-0"></div>
+              </div>
             </div>
-            <div className="rounded-xl bg-[#F4FBFC] border border-[hsl(var(--primary)/0.1)] p-4">
-              <p className="text-[10px] font-bold text-[hsl(var(--primary-dark))] uppercase tracking-tighter mb-1">Staff Rating</p>
-              <p className="text-2xl font-black text-[hsl(var(--primary-dark))]">N/A</p>
-              <p className="text-[10px] font-bold text-[hsl(var(--muted-foreground))]">0 Cleaner Reviews</p>
+
+            {/* Staff Rating */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-medium text-gray-500">Staff Rating</span>
+                <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full font-medium">0 Reviews</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-gray-900">N/A</span>
+                <span className="text-sm text-gray-500">/ 5</span>
+              </div>
+              <div className="h-1.5 bg-gray-100 rounded-full mt-2 overflow-hidden">
+                <div className="h-full bg-cyan-500 rounded-full w-0"></div>
+              </div>
+            </div>
+
+            {/* Last Inspection */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-medium text-gray-500">Last Inspection</span>
+                <span className="text-xs text-gray-400">Not available</span>
+              </div>
+              <p className="text-sm text-gray-500 mt-1">
+                No recent inspections recorded
+              </p>
+              <button className="mt-2 text-xs font-medium text-blue-600 hover:underline">
+                Schedule Inspection
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Facility Information */}
+      <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+        <h2 className="text-base font-semibold text-gray-900 mb-4">Facility Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">Location</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between pb-2 border-b border-gray-100">
+                <span className="text-sm text-gray-500">Address</span>
+                <span className="text-sm font-medium text-right">{washroom.subtitle}</span>
+              </div>
+              <div className="flex justify-between pb-2 border-b border-gray-100">
+                <span className="text-sm text-gray-500">Zone</span>
+                <span className="text-sm font-medium">{washroom.zone}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-500">City</span>
+                <span className="text-sm font-medium">{washroom.city}</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">Activity</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between pb-2 border-b border-gray-100">
+                <span className="text-sm text-gray-500">Created On</span>
+                <span className="text-sm font-medium">{washroom.createdOn}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-500">Status</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Active
+                </span>
+              </div>
             </div>
           </div>
         </div>

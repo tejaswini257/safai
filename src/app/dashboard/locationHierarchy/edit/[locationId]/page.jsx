@@ -8,7 +8,7 @@ import {
 
 export default function EditLocationHierarchyPage() {
     return (
-        <div className="theme-genz min-h-screen p-6">
+        <div className="min-h-screen p-6 bg-white">
             <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-4">
                     <EditHeader />

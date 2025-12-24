@@ -5,7 +5,7 @@ import LocationTable from "@/components/locationHierarchy/LocationTable";
 
 export default function LocationHierarchyPage() {
     return (
-        <div className="theme-saas min-h-screen p-6 space-y-6">
+        <div className="min-h-screen p-6 space-y-6 bg-white">
             <LocationHeader />
             <LocationTable />
         </div>
