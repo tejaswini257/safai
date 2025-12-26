@@ -3,6 +3,7 @@
 import { LogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function Header({ onMenuClick }) {
   const router = useRouter();
@@ -25,25 +26,29 @@ export default function Header({ onMenuClick }) {
   };
 
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white">
-      <div className="flex h-14 items-center justify-between px-4 md:px-8">
+    <header className="sticky top-0 z-20 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+      <div className="flex h-16 items-center justify-between px-4 md:px-8">
         {/* Left side */}
         <div className="flex items-center gap-3">
           <button
             onClick={onMenuClick}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:shadow md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-white shadow-sm transition hover:bg-slate-50 dark:hover:bg-slate-600 hover:shadow md:hidden"
             aria-label="Open navigation"
           >
             <Menu className="h-5 w-5" />
           </button>
 
-          <h1 className="text-lg font-semibold text-slate-900">
+          <h1 className="text-lg font-semibold text-foreground">
             Nagpur Municipal Corporation
           </h1>
         </div>
 
         {/* Right side */}
         <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-600 mx-1 hidden md:block" />
 
           {/* PROFILE LINK */}
           <Link
@@ -53,20 +58,20 @@ export default function Header({ onMenuClick }) {
             <img
               src="https://api.dicebear.com/7.x/avataaars/svg?seed=TestIntern"
               alt="User Avatar"
-              className="h-9 w-9 rounded-full border border-[#EAF7F8] bg-white group-hover:ring-2 group-hover:ring-[#58BECF]/30 transition-all"
+              className="h-9 w-9 rounded-full border-2 border-white dark:border-slate-700 bg-white dark:bg-slate-600 group-hover:ring-2 group-hover:ring-[#58BECF]/30 transition-all"
             />
 
-            <p className="hidden text-sm font-bold text-slate-900 md:block group-hover:text-[#007C85] transition-colors">
+            <p className="hidden text-sm font-bold text-slate-900 md:block group-hover:text-[#007C85] transition-colors dark:text-white">
               Test Intern
             </p>
           </Link>
 
-          <div className="h-4 w-[1px] bg-slate-200 mx-1 hidden md:block" />
+          <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-600 mx-1 hidden md:block" />
 
-          {/* UPDATED: Logout Icon with functional click handler */}
+          {/* Logout Button */}
           <button
             onClick={handleLogout}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-rose-50 hover:text-rose-600 hover:border-rose-100 hover:shadow active:scale-90"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-white shadow-sm transition hover:bg-rose-50 hover:text-rose-600 hover:border-rose-100 hover:shadow active:scale-90 dark:hover:bg-rose-900/30 dark:hover:text-rose-400"
             aria-label="Logout"
           >
             <LogOut className="h-4 w-4" />

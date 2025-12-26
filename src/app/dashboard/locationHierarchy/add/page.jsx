@@ -8,11 +8,6 @@ import {
 
 export default function AddHierarchyPage() {
     return (
-        /* UI UPDATE:
-           1. Background set to #F8FAFB for depth contrast.
-           2. Max-width container prevents elements from over-stretching.
-           3. Strategic use of white cards (inside components) for clear separation.
-        */
         <div className="min-h-screen bg-[#F8FAFB] pb-12 transition-all duration-300">
             <div className="max-w-[1600px] mx-auto p-4 md:p-8 flex flex-col gap-8">
 

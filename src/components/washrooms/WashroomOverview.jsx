@@ -123,15 +123,15 @@ export default function WashroomOverview({ washroom = MOCK_WASHROOM }) {
           Amenities & Features
         </h2>
         <div className="flex flex-wrap gap-2">
-          {washroom.amenities.map((a) => (
-            <span
-              key={a}
-              className="px-4 py-1.5 rounded-xl bg-[#F4FBFC] text-[hsl(var(--primary-dark))] font-bold text-xs border border-[hsl(var(--primary)/0.1)]"
-            >
-              {a}
-            </span>
-          ))}
-        </div>
+  {washroom.amenities.map((a) => (
+    <span
+      key={a}
+      className="px-3 py-1.5 rounded-xl bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] text-xs font-medium border border-[hsl(var(--border))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))] transition-colors"
+    >
+      {a}
+    </span>
+  ))}
+</div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

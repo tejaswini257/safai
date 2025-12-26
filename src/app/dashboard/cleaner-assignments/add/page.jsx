@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Check
 } from "lucide-react";
+import FilterBar from "../../../../components/cleanerAssignments/FilterBar";
 
 export default function CreateAssignmentsPage() {
   const router = useRouter();
@@ -48,7 +49,8 @@ export default function CreateAssignmentsPage() {
         <div className="bg-[#E6F7F9] px-6 py-4 border-b border-[#D1F0F2] flex justify-between items-center">
           <div className="flex items-center gap-2">
             <ClipboardPlus size={16} className="text-[#58BECF]" />
-            <h2 className="text-[#007C85] font-black text-[10px] uppercase tracking-widest">Create Assignments</h2>
+            <h1 className="text-lg font-extrabold tracking-tight text-[#007c85]"> Create Assignments</h1>
+
           </div>
           <div className="h-2 w-2 rounded-full bg-[#28C76F] animate-pulse" />
         </div>

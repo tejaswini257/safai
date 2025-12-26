@@ -9,36 +9,37 @@ export default function LocationInfoPanel({ location, onClose }) {
     return (
         <div
             className={`
-        absolute top-4 left-4
-        h-[calc(100%-2rem)]
-        w-[380px]
-        bg-[hsl(var(--card))]
-        text-[hsl(var(--foreground))]
-        border border-[hsl(var(--border))]
-        rounded-[var(--radius)]
-        shadow-2xl
-        z-20
-        transition-transform duration-300 ease-in-out
-        ${location ? "translate-x-0" : "-translate-x-[420px]"}
-      `}>
+                absolute top-4 left-4
+                h-[calc(100%-2rem)]
+                w-[380px]
+                bg-white dark:bg-slate-800
+                text-gray-900 dark:text-white
+                border border-gray-200 dark:border-slate-700
+                rounded-lg
+                shadow-2xl
+                z-20
+                transition-transform duration-300 ease-in-out
+                ${location ? "translate-x-0" : "-translate-x-[420px]"}
+                overflow-hidden
+            `}>
             {!location ? null : (
                 <>
                     {/* HEADER */}
-                    <div className="p-5 border-b border-[hsl(var(--border))] flex justify-between items-start bg-[#E0F7FA]/30">
+                    <div className="p-5 border-b border-gray-200 dark:border-slate-700 flex justify-between items-start bg-blue-50 dark:bg-slate-800">
                         <div>
-                            <h2 className="text-xl font-extrabold tracking-tight text-[hsl(var(--primary-dark))]">
+                            <h2 className="text-xl font-extrabold tracking-tight text-blue-800 dark:text-blue-300">
                                 {location.name}
                             </h2>
-                            <p className="text-sm font-medium text-[hsl(var(--muted-foreground))]">
+                            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                                 {location.address}
                             </p>
                         </div>
 
                         <button
                             onClick={onClose}
-                            className="p-1 hover:bg-[#E0F7FA] rounded-full transition-colors"
+                            className="p-1 hover:bg-blue-100 dark:hover:bg-slate-700 rounded-full transition-colors"
                         >
-                            <X className="w-5 h-5 text-[hsl(var(--primary-dark))]" />
+                            <X className="w-5 h-5 text-blue-800 dark:text-blue-300" />
                         </button>
                     </div>
 
@@ -47,7 +48,7 @@ export default function LocationInfoPanel({ location, onClose }) {
 
                         {/* 1. AVAILABILITY & FACILITIES SECTION */}
                         <section className="space-y-3">
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2">
                                 <Accessibility className="w-4 h-4 text-[hsl(var(--primary))]" />
                                 Availability & Access
                             </h3>
@@ -77,7 +78,7 @@ export default function LocationInfoPanel({ location, onClose }) {
 
                         {/* 2. CLEANING HISTORY SECTION */}
                         <section className="space-y-4">
-                            <h3 className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2">
                                 <History className="w-4 h-4 text-[hsl(var(--primary))]" />
                                 Cleaning History
                             </h3>

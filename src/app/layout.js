@@ -1,5 +1,6 @@
 // src/app/layout.js
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export const metadata = {
   title: "Safai Portal",
@@ -8,9 +9,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased transition-colors duration-200">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

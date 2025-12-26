@@ -45,37 +45,35 @@ const amenityMap = {
 export default function AmenitiesList({ amenities = [] }) {
     return (
         <section className="space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--muted-foreground))] flex items-center gap-2">
-                <Navigation className="w-3 h-3 text-[hsl(var(--primary))]" />
+            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                <Navigation className="w-3 h-3 text-blue-500" />
                 Facility Amenities
             </h3>
 
-            <div className="grid grid-cols-2 gap-3">
-                {amenities.map((a, index) => {
-                    // Fallback to Info icon if the mapping name is not found
-                    const Icon = amenityMap[a] || Info;
-
-                    return (
-                        <div
-                            key={index}
-                            className="flex items-center gap-3 bg-[hsl(var(--muted))] p-3 rounded-xl border border-[hsl(var(--border))] transition-all hover:bg-[#F4FBFC] group"
-                        >
-                            <div className="p-1.5 bg-white rounded-lg shadow-sm group-hover:scale-110 transition-transform">
-                                <Icon className="w-4 h-4 text-[hsl(var(--primary))]" />
+            <div className="grid grid-cols-2 gap-2">
+                {amenities.length > 0 ? (
+                    amenities.map((amenity, index) => {
+                        const Icon = amenityMap[amenity] || Info;
+                        return (
+                            <div
+                                key={index}
+                                className="flex items-center gap-2 p-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg"
+                            >
+                                <div className="p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                                    <Icon className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                                </div>
+                                <span className="text-xs font-medium text-gray-800 dark:text-gray-200">
+                                    {amenity}
+                                </span>
                             </div>
-                            <span className="text-xs font-semibold text-[hsl(var(--foreground))]">
-                                {a}
-                            </span>
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                ) : (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 col-span-2">
+                        No amenities listed for this location.
+                    </p>
+                )}
             </div>
-
-            {amenities.length === 0 && (
-                <p className="text-xs italic text-[hsl(var(--muted-foreground))] text-center py-2">
-                    No amenities listed for this location.
-                </p>
-            )}
         </section>
     );
 }

@@ -2,13 +2,11 @@ import Link from "next/link";
 
 export default function WashroomHeader() {
     return (
-        <div className="
+        <div className="washroom-header
       flex flex-col md:flex-row justify-between items-start md:items-center
       rounded-[var(--radius)]
       px-8 py-6
-      /* Solid primary-dark background as requested */
-      bg-[hsl(var(--primary-dark))] 
-      shadow-[0_4px_20px_-5px_rgba(0,0,0,0.3)]
+      shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)]
       relative
       overflow-hidden
     ">
@@ -43,11 +41,11 @@ export default function WashroomHeader() {
             <div className="flex items-center gap-4 mt-5 md:mt-0 z-10">
                 {/* ADD LOCATION */}
                 <Link href="/dashboard/washrooms/add-washroom">
-                    <button className="
+                    <button className="action-button
             group flex items-center gap-2
             rounded-xl
-            bg-white
             px-5 py-2.5
+            font-medium
             text-sm font-bold
             text-[hsl(var(--primary-dark))]
             shadow-sm
@@ -62,15 +60,12 @@ export default function WashroomHeader() {
 
                 {/* ASSIGN */}
                 <Link href="/dashboard/cleaner-assignments/add">
-                    <button className="
+                    <button className="assign-button
             flex items-center gap-2
-            rounded-xl
-            bg-[hsl(var(--accent))]
             px-6 py-2.5
             text-sm font-bold
-            text-[hsl(var(--accent-foreground))]
-            shadow-[0_4px_14px_0_rgba(244,183,64,0.3)]
-            hover:brightness-110 hover:shadow-[0_6px_20px_rgba(244,183,64,0.2)]
+            shadow-sm
+            hover:shadow-md
             active:scale-95
             transition-all duration-200
           ">

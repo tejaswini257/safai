@@ -64,23 +64,44 @@ export default function CleanerAssignmentsPage() {
     <div className="min-h-screen bg-[#F8FAFB] py-8 px-8 text-left">
       <div className="max-w-7xl mx-auto space-y-8">
 
-        {/* 1. Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="text-left">
-            <h1 className="text-3xl font-bold text-slate-800 tracking-tight leading-none uppercase">
-              Cleaner Assignments
-            </h1>
-            <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mt-2">
-              System Personnel Mapping Registry
-            </p>
+        {/* 1. BRANDED HEADER SECTION (Updated to match Location Hierarchy style) */}
+        <div className="w-full bg-[#E6F7F9] rounded-[24px] p-4 flex flex-col md:flex-row items-center justify-between border border-[#D1F0F2] gap-4">
+          <div className="flex items-center gap-4">
+            {/* Icon Box */}
+            <div className="h-14 w-14 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-white/50">
+              <Users size={24} className="text-[#007C85]" />
+            </div>
+            {/* Title Group */}
+            <div className="text-left">
+              <h1 className="text-[#007C85] font-black text-xl uppercase tracking-tight leading-none">
+                Cleaner Assignments
+              </h1>
+              <div className="flex items-center gap-1.5 mt-1.5">
+                <Activity size={12} className="text-[#007C85]/60" />
+                <p className="text-[10px] font-bold text-[#007C85]/60 uppercase tracking-widest">
+                  System Personnel Mapping Registry
+                </p>
+              </div>
+            </div>
           </div>
-          <Link
-            href="/dashboard/cleaner-assignments/add"
-            style={{ background: 'linear-gradient(to right, #58BECF, #6D9CDC)' }}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-[11px] font-bold uppercase tracking-widest shadow-lg shadow-cyan-500/20 hover:brightness-105 active:scale-95 transition-all"
-          >
-            <Plus size={16} strokeWidth={3} /> Add Cleaner
-          </Link>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-3">
+            <button 
+              type="button"
+              className="bg-white px-6 py-3 rounded-xl shadow-sm text-[#007C85] text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 border border-white"
+            >
+              <LayoutList size={14} /> Show Assignments
+            </button>
+            
+            <Link
+              href="/dashboard/cleaner-assignments/add"
+              style={{ background: 'linear-gradient(to right, #58BECF, #6D9CDC)' }}
+              className="px-6 py-3 rounded-xl text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-cyan-500/20 hover:brightness-105 active:scale-95 transition-all flex items-center gap-2"
+            >
+              <Plus size={16} strokeWidth={3} /> Add Cleaner
+            </Link>
+          </div>
         </div>
 
         {/* 2. Summary Cards */}
@@ -175,14 +196,12 @@ export default function CleanerAssignmentsPage() {
                       </p>
                     </td>
                     <td className="px-6 py-5">
-                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${item.role === 'Supervisor' ? 'bg-blue-50 border-blue-100 text-blue-500' : 'bg-teal-50 border-teal-100 text-teal-600'
-                        }`}>
+                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${item.role === 'Supervisor' ? 'bg-blue-50 border-blue-100 text-blue-500' : 'bg-teal-50 border-teal-100 text-teal-600'}`}>
                         {item.role}
                       </span>
                     </td>
                     <td className="px-6 py-5">
-                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${item.status === 'Assigned' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' : 'bg-rose-50 border-rose-100 text-rose-400'
-                        }`}>
+                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${item.status === 'Assigned' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' : 'bg-rose-50 border-rose-100 text-rose-400'}`}>
                         {item.status}
                       </span>
                     </td>

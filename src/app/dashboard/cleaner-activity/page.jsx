@@ -6,17 +6,23 @@ import {
   ActivityStats,
   ActivityGrid,
 } from "@/components/cleanerActivity";
+import { 
+  Activity, 
+  LayoutList, 
+  Plus, 
+  History 
+} from "lucide-react";
 
 export default function CleanerActivityPage() {
   return (
     // Uses your global --muted color for the page background
     <div className="min-h-screen bg-[hsl(var(--muted))] p-6 space-y-8">
 
-      {/* Header section wrapped in the themed container if not already styled */}
       <div className="max-w-full mx-auto space-y-6">
-
+        
         <CleanerActivityHeader />
 
+        {/* FILTERS SECTION */}
         <div className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-[var(--radius)] p-4 shadow-sm">
           <ActivityFilters />
         </div>

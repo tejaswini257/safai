@@ -7,9 +7,7 @@ export default function AddHierarchyHeader() {
     const router = useRouter();
 
     return (
-        /* UI UPDATE: 
-           Pure white floating card with refined shadow to pop against #F8FAFB background.
-        */
+        /* UI UPDATE: Pure white floating card with refined shadow */
         <div className="rounded-[24px] bg-white border border-slate-100 shadow-sm overflow-hidden relative group">
 
             {/* Subtle background decorative tint for brand identity */}
@@ -19,16 +17,18 @@ export default function AddHierarchyHeader() {
 
                 {/* Title & Description Section */}
                 <div className="flex items-center gap-5">
-                    {/* Branded Icon Shield */}
-                    <div className="h-12 w-12 rounded-2xl bg-[#E6F7F9] border border-[#D1F0F2] flex items-center justify-center shadow-inner">
-                        <FolderPlus className="h-6 w-6 text-[#58BECF]" strokeWidth={2.5} />
+                    {/* Branded Icon Shield - Slightly reduced size to match new header style */}
+                    <div className="h-11 w-11 rounded-2xl bg-[#E6F7F9] border border-[#D1F0F2] flex items-center justify-center shadow-inner">
+                        <FolderPlus className="h-5 w-5 text-[#58BECF]" strokeWidth={3} />
                     </div>
-                    <div>
-                        <h1 className="text-xl font-black tracking-tight text-[#007C85] uppercase leading-none">
+                    <div className="text-left">
+                        {/* UPDATED HEADING: Increased size and bold weight to match user management */}
+                        <h1 className="text-lg font-black tracking-tight text-[#007C85] uppercase leading-none">
                             Add New Zone Type
                         </h1>
-                        <p className="flex items-center gap-1.5 mt-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                            <MapPin size={12} className="text-[#58BECF]" />
+                        {/* UPDATED SUBTITLE: Increased text size for legibility */}
+                        <p className="flex items-center gap-1.5 mt-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
+                            <MapPin size={13} className="text-[#58BECF]" />
                             Configure Workspace Architecture
                         </p>
                     </div>
@@ -41,7 +41,7 @@ export default function AddHierarchyHeader() {
                         flex items-center gap-2 
                         px-6 py-3 rounded-xl 
                         bg-white border border-slate-200 
-                        text-[10px] font-black uppercase tracking-widest text-[#007C85] 
+                        text-[11px] font-black uppercase tracking-widest text-[#007C85] 
                         hover:bg-[#F8FAFB] hover:border-[#58BECF]/30 hover:shadow-md
                         transition-all active:scale-95 shadow-sm
                     "

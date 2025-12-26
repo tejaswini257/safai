@@ -24,10 +24,10 @@ const initialUserRows = [
 
 const getRoleStyle = (role) => {
     switch (role) {
-        case 'Admin': return 'bg-blue-50 text-blue-600 border-blue-100';
-        case 'Supervisor': return 'bg-teal-50 text-teal-600 border-teal-100';
-        case 'Cleaner': return 'bg-slate-50 text-slate-600 border-slate-100';
-        default: return 'bg-gray-50 text-gray-600 border-gray-100';
+        case 'Admin': return 'role-badge admin';
+        case 'Supervisor': return 'role-badge supervisor';
+        case 'Cleaner': return 'role-badge cleaner';
+        default: return 'role-badge';
     }
 };
 

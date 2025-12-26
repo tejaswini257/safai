@@ -14,17 +14,17 @@ import { WashroomCleanlinessChart, CleanerPerformanceChart } from "@/components/
 
 /* ------------------ CARD SHELL ------------------ */
 const CardShell = ({ title, subtitle, icon, headerRight, children }) => (
-  <div className="bg-white rounded-2xl border border-[#EEF2F5] shadow-[0_10px_30px_rgba(15,23,42,0.06)] p-4 sm:p-5">
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-3 sm:mb-4">
-      <div className="flex items-center gap-2 sm:gap-3">
+  <div className="bg-card text-card-foreground rounded-2xl border border-border/50 shadow-sm p-5">
+    <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center gap-3">
         {icon}
         <div>
           {subtitle && (
-            <p className="text-xs font-semibold text-[#2DB7C4] leading-none sm:leading-normal">
+            <p className="text-xs font-semibold text-primary">
               {subtitle}
             </p>
           )}
-          <h3 className="text-sm sm:text-base font-semibold text-[#2F3A45] leading-tight sm:leading-normal">
+          <h3 className="text-base font-semibold text-foreground">
             {title}
           </h3>
         </div>
@@ -44,37 +44,37 @@ const SummaryCards = () => {
       label: "Total Tolites",
       value: "18",
       icon: Users,
-      bg: "from-[#EAF7F8] to-[#d8f0f2]",
-      color: "text-[#2DB7C4]",
-      shadow: "shadow-[0_4px_20px_rgba(45,183,196,0.15)]",
-      hover: "hover:shadow-[0_8px_25px_rgba(45,183,196,0.25)]"
+      bg: "bg-gradient-to-br from-[#EAF7F8] to-[#d8f0f2]",
+      border: "border border-[#2DB7C4]/20",
+      text: "text-[#2DB7C4]",
+      iconBg: "bg-[#2DB7C4]/10"
     },
     {
       label: "Ongoing Tasks",
       value: "5",
       icon: MessageSquare,
-      bg: "from-[#EEF4FF] to-[#dde7ff]",
-      color: "text-[#4F7FD9]",
-      shadow: "shadow-[0_4px_20px_rgba(79,127,217,0.15)]",
-      hover: "hover:shadow-[0_8px_25px_rgba(79,127,217,0.25)]"
+      bg: "bg-gradient-to-br from-[#EEF4FF] to-[#dde7ff]",
+      border: "border border-[#9F7AEA]/20",
+      text: "text-[#4F7FD9]",
+      iconBg: "bg-[#4F7FD9]/10"
     },
     {
       label: "Completed Tasks",
       value: "4 / 18",
       icon: CheckCircle2,
-      bg: "from-[#ECFDF3] to-[#daf5e8]",
-      color: "text-[#10B981]",
-      shadow: "shadow-[0_4px_20px_rgba(16,185,129,0.15)]",
-      hover: "hover:shadow-[0_8px_25px_rgba(16,185,129,0.25)]"
+      bg: "bg-gradient-to-br from-[#ECFDF3] to-[#daf5e8]",
+      border: "border border-[#48BB78]/20",
+      text: "text-[#10B981]",
+      iconBg: "bg-[#10B981]/10"
     },
     {
       label: "Total Repairs",
       value: "4",
       icon: Wrench,
-      bg: "from-[#FFF6E5] to-[#ffedcc]",
-      color: "text-[#F4B740]",
-      shadow: "shadow-[0_4px_20px_rgba(244,183,64,0.15)]",
-      hover: "hover:shadow-[0_8px_25px_rgba(244,183,64,0.25)]"
+      bg: "bg-gradient-to-br from-[#FFF6E5] to-[#ffedcc]",
+      border: "border border-[#F4B740]/20",
+      text: "text-[#F4B740]",
+      iconBg: "bg-[#F4B740]/10"
     },
   ];
 
@@ -109,19 +109,22 @@ const SummaryCards = () => {
         return (
           <div
             key={card.label}
-            className="bg-white rounded-xl border border-[#EEF2F5] p-2 sm:px-3 sm:py-3 shadow-sm hover:shadow-md transition-shadow duration-200"
+            className={`summary-card ${card.bg} dark:bg-card dark:border dark:border-border/30 relative rounded-xl px-4 py-3 shadow-sm transition-all duration-500 hover:scale-[1.02] group overflow-hidden`}
           >
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 dark:group-hover:opacity-30 transition-opacity duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-500/80 dark:to-blue-500/80 rounded-xl opacity-0 group-hover:opacity-20 dark:group-hover:opacity-15 blur-md transition-all duration-500 group-hover:duration-200" />
+            <div className="flex items-center gap-3">
               <div
-                className={`h-7 w-7 sm:h-8 sm:w-8 rounded-lg ${card.bg} flex items-center justify-center flex-shrink-0`}
+                className={`h-8 w-8 rounded-lg ${card.iconBg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}
               >
-                <Icon className={`h-3 w-3 sm:h-4 sm:w-4 ${card.color}`} />
+                <Icon className={`h-4 w-4 ${card.text}`} />
               </div>
-              <div className="min-w-0">
-                <p className="text-sm sm:text-base font-semibold text-[#2F3A45] leading-tight truncate">
+              <div>
+                <p className={`text-lg font-bold ${card.text} dark:text-foreground leading-tight card-text`}>
                   {card.value}
                 </p>
-                <p className="text-[10px] sm:text-xs text-[#6B7280] truncate">
+                <p className={`text-xs font-medium ${card.text}/80 dark:text-muted-foreground card-label`}>
                   {card.label}
                 </p>
               </div>
@@ -136,16 +139,31 @@ const SummaryCards = () => {
 /* ------------------ TOP RATED ------------------ */
 const HighlightsCard = ({ locations }) => {
   const rankStyles = [
-    { bg: "bg-[#FFF6E5]", badge: "bg-[#F4B740] text-white" },
-    { bg: "bg-[#EEF4FF]", badge: "bg-[#4F7FD9] text-white" },
-    { bg: "bg-[#FFF1E8]", badge: "bg-[#C77C5C] text-white" },
+    { 
+      bg: "bg-gradient-to-br from-[#EAF7F8] to-[#d8f0f2]", 
+      border: "border border-[#49B8D3]/30",
+      text: "text-[#2DB7C4]",
+      badge: "bg-[#2DB7C4] text-white" 
+    },
+    { 
+      bg: "bg-gradient-to-br from-[#F5F0FF] to-[#eae0ff]", 
+      border: "border border-[#9F7AEA]/30",
+      text: "text-[#7E5BDD]",
+      badge: "bg-[#7E5BDD] text-white" 
+    },
+    { 
+      bg: "bg-gradient-to-br from-[#ECFDF3] to-[#daf5e8]", 
+      border: "border border-[#48BB78]/30",
+      text: "text-[#10B981]",
+      badge: "bg-[#10B981] text-white" 
+    },
   ];
 
   return (
     <CardShell
       title="Today's Top Rated"
       headerRight={
-        <button className="text-xs sm:text-sm text-[#2DB7C4] hover:underline whitespace-nowrap">
+        <button className="text-sm text-[#2DB7C4] font-medium hover:underline">
           View all
         </button>
       }
@@ -154,19 +172,19 @@ const HighlightsCard = ({ locations }) => {
         {locations.slice(0, 3).map((loc, i) => (
           <div
             key={loc.name}
-            className={`flex items-center justify-between rounded-xl px-3 sm:px-4 py-2 sm:py-3 ${rankStyles[i].bg}`}
+            className={`highlights-card flex items-center justify-between rounded-xl px-4 py-3 ${rankStyles[i].bg} dark:bg-card/50 dark:border dark:border-border/30 shadow-sm hover:shadow-md transition-all duration-200`}
           >
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <div
-                className={`h-6 w-6 sm:h-7 sm:w-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs sm:text-sm font-semibold ${rankStyles[i].badge}`}
+                className={`h-7 w-7 rounded-full flex items-center justify-center text-sm font-semibold ${rankStyles[i].badge} dark:bg-primary/80 dark:text-white`}
               >
                 {i + 1}
               </div>
-              <p className="text-xs sm:text-sm font-medium text-[#2F3A45] truncate">
+              <p className={`text-sm font-medium ${rankStyles[i].text} dark:text-foreground location-name`}>
                 {loc.name}
               </p>
             </div>
-            <span className="text-xs sm:text-sm font-semibold text-[#2F3A45] whitespace-nowrap ml-2">
+            <span className={`text-sm font-semibold ${rankStyles[i].text} dark:text-primary location-score`}>
               ⭐ {loc.score}
             </span>
           </div>
@@ -233,23 +251,25 @@ const activities = [
 /* ------------------ PAGE ------------------ */
 export default function DashboardPage() {
   return (
-    <div className="bg-white p-4 sm:p-6 space-y-4 sm:space-y-6">
+    <div className="min-h-screen p-6 space-y-6 bg-background">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <p className="text-xs sm:text-sm font-semibold text-[#2DB7C4]">
+          <p className="text-sm font-semibold text-primary">
             Overview
           </p>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#2F3A45]">
+          <h1 className="text-2xl font-bold text-foreground">
             Dashboard
           </h1>
-          <p className="text-xs sm:text-sm text-[#6B7280]">
+          <p className="text-sm text-muted-foreground">
             Snapshot of toilets, cleaners and field updates
           </p>
         </div>
-        <div className="flex items-center justify-center sm:justify-start gap-2 bg-white px-3 sm:px-4 py-2 rounded-full border border-[#EEF2F5] text-xs sm:text-sm text-[#2F3A45] w-full sm:w-auto">
-          <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-[#2DB7C4] flex-shrink-0" />
-          <span className="truncate">Fresh insights ready</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-card text-foreground px-4 py-2 rounded-full border border-border text-sm">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Fresh insights ready
+          </div>
         </div>
       </div>
 

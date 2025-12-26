@@ -19,11 +19,11 @@ export default function CleanerActivityHeader() {
                     <HiOutlineClipboardList className="text-[hsl(var(--primary))] text-2xl" />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-extrabold tracking-tight text-[hsl(var(--foreground))]">
-                        Cleaner Activity
+                    <h1 className="text-lg font-extrabold tracking-tight text-[#007c85]">
+                        CLENERS ACTIVITY
                     </h1>
-                    <p className="mt-0.5 text-sm font-medium text-[hsl(var(--muted-foreground))] flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--primary))] animate-pulse"></span>
+                    <p className="mt-0.5 text-sm font-medium text-[#71b5bb] flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#71b5bb] animate-pulse"></span>
                         Monitor real-time daily cleaning tasks and progress
                     </p>
                 </div>

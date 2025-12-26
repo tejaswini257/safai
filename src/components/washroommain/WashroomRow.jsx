@@ -42,7 +42,7 @@ export default function WashroomRow({ washroom, index }) {
                 </td>
 
                 <td className="p-4">
-                    <span className="px-3 py-1 bg-[#E0F7FA] text-[hsl(var(--primary-dark))] rounded-lg text-xs font-extrabold border border-[hsl(var(--primary)/0.1)] shadow-sm">
+                    <span className="current-score-badge">
                         {washroom.current_cleaning_score ?? washroom.average_cleaning_score ?? "-"}
                     </span>
                 </td>

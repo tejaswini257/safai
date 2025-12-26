@@ -19,7 +19,7 @@ export default function ActivityCard({ activity }) {
 
     return (
         <>
-            <div className="flex flex-col justify-between rounded-[24px] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 p-5 h-[380px] transition-all duration-300 group">
+            <div className="flex flex-col justify-between rounded-[24px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1 p-5 h-[380px] transition-all duration-300 group">
                 <div className="space-y-3">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
@@ -30,12 +30,12 @@ export default function ActivityCard({ activity }) {
                                 <h3 className="text-sm font-bold text-slate-900 leading-none mb-1">
                                     {activity.cleanerName}
                                 </h3>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 opacity-70">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
                                     Staff Member
                                 </span>
                             </div>
                         </div>
-                        <span className="rounded-lg bg-emerald-50 border border-emerald-100 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-600">
+                        <span className="rounded-lg bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800/50 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
                             Completed
                         </span>
                     </div>
@@ -78,17 +78,17 @@ export default function ActivityCard({ activity }) {
                     </div>
                 </div>
 
-                <div className="bg-[#F4FBFC] rounded-2xl p-4 space-y-2.5">
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
+                <div className="bg-[#F4FBFC] dark:bg-slate-700/50 rounded-2xl p-4 space-y-2.5">
+                    <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
                         <MapPin className="h-3.5 w-3.5 text-[#58BECF]" />
                         <span className="truncate">{activity.location}</span>
                     </div>
                     <div className="flex flex-col gap-1.5 pl-5 border-l-2 border-[#58BECF]/20">
-                        <div className="flex items-center gap-2 text-[11px] text-slate-500 font-bold">
+                        <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-bold">
                             <Clock className="h-3 w-3" />
                             <span>Finished: {activity.finishedAt}</span>
                         </div>
-                        <p className="text-[11px] font-black text-emerald-600 uppercase tracking-widest">
+                        <p className="text-[11px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
                             Validated • 1m
                         </p>
                     </div>
