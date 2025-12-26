@@ -31,7 +31,9 @@ const CardShell = ({ title, subtitle, icon, headerRight, children }) => (
       </div>
       {headerRight}
     </div>
-    {children}
+    <div className="text-sm sm:text-base">
+      {children}
+    </div>
   </div>
 );
 
@@ -101,7 +103,7 @@ const SummaryCards = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
       {cards.map((card) => {
         const Icon = card.icon;
         return (
@@ -159,20 +161,20 @@ const HighlightsCard = ({ locations }) => {
 
   return (
     <CardShell
-      title="Today’s Top Rated"
+      title="Today's Top Rated"
       headerRight={
         <button className="text-sm text-[#2DB7C4] font-medium hover:underline">
           View all
         </button>
       }
     >
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         {locations.slice(0, 3).map((loc, i) => (
           <div
             key={loc.name}
             className={`highlights-card flex items-center justify-between rounded-xl px-4 py-3 ${rankStyles[i].bg} dark:bg-card/50 dark:border dark:border-border/30 shadow-sm hover:shadow-md transition-all duration-200`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <div
                 className={`h-7 w-7 rounded-full flex items-center justify-center text-sm font-semibold ${rankStyles[i].badge} dark:bg-primary/80 dark:text-white`}
               >
@@ -197,23 +199,23 @@ const ActivityCard = ({ items }) => (
   <CardShell
     title="Cleaner Activity"
     icon={
-      <div className="h-8 w-8 rounded-xl bg-[#EAF7F8] flex items-center justify-center">
-        <Activity className="h-4 w-4 text-[#2DB7C4]" />
+      <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-xl bg-[#EAF7F8] flex items-center justify-center flex-shrink-0">
+        <Activity className="h-3 w-3 sm:h-4 sm:w-4 text-[#2DB7C4]" />
       </div>
     }
   >
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {items.map((item, i) => (
         <div
           key={i}
-          className="flex items-start gap-3 bg-[#F8FAFB] border border-[#EEF2F5] rounded-xl p-3"
+          className="flex items-start gap-2 sm:gap-3 bg-[#F8FAFB] border border-[#EEF2F5] rounded-xl p-2 sm:p-3"
         >
-          <span className="w-2 h-2 mt-2 rounded-full bg-[#2DB7C4]" />
-          <div>
-            <p className="text-sm text-[#2F3A45]">{item.text}</p>
-            <p className="text-xs text-[#6B7280]">
+          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 mt-2 sm:mt-2.5 rounded-full bg-[#2DB7C4] flex-shrink-0" />
+          <div className="min-w-0">
+            <p className="text-xs sm:text-sm text-[#2F3A45] leading-snug">{item.text}</p>
+            <p className="text-[10px] sm:text-xs text-[#6B7280] mt-0.5">
               {item.time}
-              {item.rating && ` • ⭐ ${item.rating}`}
+              {item.rating && <span className="whitespace-nowrap"> • ⭐ {item.rating}</span>}
             </p>
           </div>
         </div>
@@ -251,7 +253,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen p-6 space-y-6 bg-background">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
           <p className="text-sm font-semibold text-primary">
             Overview
@@ -275,17 +277,17 @@ export default function DashboardPage() {
       <SummaryCards />
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="h-[400px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="h-[300px] sm:h-[350px] lg:h-[400px]">
           <WashroomCleanlinessChart />
         </div>
-        <div className="h-[400px]">
+        <div className="h-[300px] sm:h-[350px] lg:h-[400px]">
           <CleanerPerformanceChart />
         </div>
       </div>
 
       {/* Main content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <HighlightsCard locations={locations} />
         <ActivityCard items={activities} />
       </div>
