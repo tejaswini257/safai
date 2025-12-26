@@ -210,22 +210,36 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
       </div>
 
       {/* FOOTER - Updated with Profile Link */}
+      {/* FOOTER - Updated with Settings Link */}
       <div className="border-t border-[#EAF2F5] p-4 bg-white">
+        {/* The entire profile/settings block now acts as a link to /dashboard/settings */}
         <Link
-          href="/dashboard/profile"
+          href="/dashboard/settings"
           onClick={onClose}
-          className="flex items-center gap-3 mb-3 p-1.5 rounded-xl hover:bg-slate-50 transition-all group cursor-pointer"
+          className={`flex items-center gap-3 mb-3 p-1.5 rounded-xl transition-all group cursor-pointer ${pathname === "/dashboard/settings" ? "bg-[#EAF7F8]" : "hover:bg-slate-50"
+            }`}
         >
-          <div className="h-9 w-9 rounded-full bg-[#EAF7F8] flex items-center justify-center font-black text-[#2DB7C4] group-hover:scale-110 transition-transform">
+          <div className={`h-9 w-9 rounded-full flex items-center justify-center font-black transition-transform group-hover:scale-110 ${pathname === "/dashboard/settings" ? "bg-[#2DB7C4] text-white" : "bg-[#EAF7F8] text-[#2DB7C4]"
+            }`}>
             TI
           </div>
+
           {!collapsed && (
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-bold text-[#2F3A45] truncate group-hover:text-[#2DB7C4] transition-colors">Test Intern</p>
-              <p className="text-[10px] font-bold text-[#9CA3AF] uppercase tracking-tighter">Admin Account</p>
+              <p className={`text-sm font-bold truncate transition-colors ${pathname === "/dashboard/settings" ? "text-[#2DB7C4]" : "text-[#2F3A45] group-hover:text-[#2DB7C4]"
+                }`}>
+                Test Intern
+              </p>
+              <p className="text-[10px] font-bold text-[#9CA3AF] uppercase tracking-tighter">
+                Admin Account
+              </p>
             </div>
           )}
-          {!collapsed && <Settings className="h-4 w-4 text-[#9CA3AF] group-hover:rotate-45 transition-transform" />}
+
+          {!collapsed && (
+            <Settings className={`h-4 w-4 transition-transform group-hover:rotate-45 ${pathname === "/dashboard/settings" ? "text-[#2DB7C4]" : "text-[#9CA3AF]"
+              }`} />
+          )}
         </Link>
 
         <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#EAF2F5] px-3 py-2 text-sm font-semibold text-[#2F3A45] hover:bg-rose-50 hover:text-rose-600 hover:border-rose-100 transition-all group">
