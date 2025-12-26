@@ -19,7 +19,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [justSignedUp, setJustSignedUp] = useState(false);
 
-  // Check if user just signed up successfully
   useEffect(() => {
     if (searchParams.get("signup") === "success") {
       setJustSignedUp(true);
@@ -36,7 +35,6 @@ export default function LoginPage() {
     setError(null);
     setJustSignedUp(false);
 
-    // Logical Validation
     if (!formData.phone || !formData.password) {
       setError("Identification and Access Key are required.");
       return;
@@ -45,14 +43,21 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // Simulate API Authentication
+      // 1. Simulate API Authentication delay
       await new Promise((r) => setTimeout(r, 1500));
 
-      // Mock check (e.g., if phone is '1234567890' and pass is 'password')
-      // In production, replace with: const res = await signIn('credentials', {...})
+      /**
+       * FIX: Set the Auth Cookie
+       * Your middleware is looking for 'auth-token'. 
+       * We set it here so the middleware allows the /dashboard redirect.
+       */
+      document.cookie = "auth-token=true; path=/; max-age=3600; SameSite=Lax";
 
-      // Success Logic: Redirect to dashboard
+      // 2. Success Logic: Redirect to dashboard
+      // Now that the cookie exists, middleware will let the user through.
       router.push("/dashboard");
+      router.refresh(); // Optional: forces a refresh to ensure middleware state syncs
+
     } catch (err) {
       setError("Authentication failed. Please check your credentials.");
     } finally {
@@ -60,51 +65,45 @@ export default function LoginPage() {
     }
   }
 
-  const inputStyles = "w-full rounded-xl border border-slate-200 pl-11 pr-4 py-3.5 bg-[#F8FAFB] text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-cyan-50 focus:border-[#58BECF] transition-all font-bold text-sm shadow-sm";
-  const labelStyles = "text-[10px] font-black uppercase tracking-[0.2em] text-[#007C85] ml-1";
-  const iconStyles = "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#58BECF] transition-colors";
+  const inputStyles = "w-full rounded-xl border border-slate-200 pl-10 sm:pl-11 pr-4 py-3 sm:py-3.5 bg-[#F8FAFB] text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-cyan-50 focus:border-[#58BECF] transition-all font-medium sm:font-bold text-sm shadow-sm";
+  const labelStyles = "text-[10px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[#007C85] ml-1";
+  const iconStyles = "absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#58BECF] transition-colors";
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-[#F8FAFB] overflow-hidden py-10">
+    <div className="relative min-h-screen flex items-center justify-center bg-[#F8FAFB] overflow-hidden p-4 sm:p-6 md:py-10">
       {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#E0F7FA]/50 blur-[120px] rounded-full -ml-48 -mt-48 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#E6F7F9]/60 blur-[120px] rounded-full -mr-48 -mb-48 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-[#E0F7FA]/50 blur-[80px] sm:blur-[100px] md:blur-[120px] rounded-full -ml-32 sm:-ml-40 md:-ml-48 -mt-32 sm:-mt-40 md:-mt-48 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-[#E6F7F9]/60 blur-[80px] sm:blur-[100px] md:blur-[120px] rounded-full -mr-32 sm:-mr-40 md:-mr-48 -mb-32 sm:-mb-40 md:-mb-48 pointer-events-none" />
 
       <AuthCard
         title="SAFAI PORTAL"
         subtitle="Initialize an encrypted session to manage your workspace."
-
-        /* REPLACE logoUrl="/globe.svg" WITH THIS customLogo PROP
-           This uses the Light Cyan and Teal theme from your table headers.
-        */
         customLogo={
-          <div className="h-16 w-16 rounded-2xl bg-[#E6F7F9] border border-[#D1F0F2] flex items-center justify-center shadow-sm mx-auto mb-4">
-            <ShieldCheck className="h-9 w-9 text-[#58BECF]" strokeWidth={2} />
+          <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-[#E6F7F9] border border-[#D1F0F2] flex items-center justify-center shadow-sm mx-auto mb-3 sm:mb-4">
+            <ShieldCheck className="h-8 w-8 sm:h-9 sm:w-9 text-[#58BECF]" strokeWidth={2} />
           </div>
         }
         footer={
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+          <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
             New administrator?{" "}
-            <Link href="/auth/sign-in" className="text-[#58BECF] font-black hover:text-[#007C85] transition-colors ml-1 uppercase tracking-widest">
+            <Link href="/auth/sign-in" className="text-[#58BECF] font-black hover:text-[#007C85] transition-colors ml-1 uppercase tracking-widest whitespace-nowrap">
               Request Portal Access
             </Link>
           </p>
         }
       >
         <form onSubmit={handleSubmit} className="space-y-6 text-left" noValidate>
-          {/* Success Notification */}
           {justSignedUp && (
-            <div className="animate-in fade-in slide-in-from-top-2 flex items-center gap-3 rounded-xl bg-emerald-50 p-4 text-[10px] font-black uppercase tracking-wide text-emerald-600 border border-emerald-100 mb-2">
-              <CheckCircle2 size={16} />
-              Account Created. Please sign in to verify.
+            <div className="animate-in fade-in slide-in-from-top-2 flex items-center gap-2 sm:gap-3 rounded-xl bg-emerald-50 p-3 sm:p-4 text-[9px] sm:text-[10px] font-black uppercase tracking-wide text-emerald-600 border border-emerald-100 mb-2">
+              <CheckCircle2 size={14} className="flex-shrink-0" />
+              <span>Account Created. Please sign in to verify.</span>
             </div>
           )}
 
-          {/* Identity/Phone Field */}
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <label className={labelStyles}>Personnel Identity (Phone)</label>
             <div className="relative group">
-              <div className={iconStyles}><Phone size={18} /></div>
+              <div className={iconStyles}><Phone size={16} className="sm:w-4 sm:h-4 w-[14px] h-[14px]" /></div>
               <input
                 name="phone"
                 type="tel"
@@ -117,16 +116,15 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Access Key/Password Field */}
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <div className="flex justify-between items-center px-1">
               <label className={labelStyles}>Access Key</label>
-              <Link href="#" className="text-[9px] font-black text-[#58BECF] uppercase tracking-widest hover:text-[#007C85]">
+              <Link href="#" className="text-[8px] sm:text-[9px] font-black text-[#58BECF] uppercase tracking-widest hover:text-[#007C85]">
                 Lost Key?
               </Link>
             </div>
             <div className="relative group">
-              <div className={iconStyles}><Lock size={18} /></div>
+              <div className={iconStyles}><Lock size={16} className="sm:w-4 sm:h-4 w-[14px] h-[14px]" /></div>
               <input
                 name="password"
                 type="password"
@@ -139,25 +137,23 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Error Message */}
           {error && (
-            <div className="animate-in fade-in zoom-in-95 flex items-center gap-2 rounded-xl bg-rose-50 p-3 text-[10px] font-black uppercase tracking-wide text-rose-500 border border-rose-100">
-              <AlertCircle size={14} strokeWidth={3} />
-              {error}
+            <div className="animate-in fade-in zoom-in-95 flex items-start sm:items-center gap-2 rounded-xl bg-rose-50 p-3 text-[9px] sm:text-[10px] font-black uppercase tracking-wide text-rose-500 border border-rose-100">
+              <AlertCircle size={12} strokeWidth={3} className="flex-shrink-0 mt-0.5 sm:mt-0" />
+              <span>{error}</span>
             </div>
           )}
 
-          {/* Submit Action */}
           <button
             type="submit"
             disabled={loading}
             style={{ background: 'linear-gradient(to right, #58BECF, #6D9CDC)' }}
-            className="group relative w-full overflow-hidden rounded-xl py-4 font-black text-[11px] uppercase tracking-[0.2em] text-white shadow-lg shadow-cyan-500/20 transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+            className="group relative w-full overflow-hidden rounded-xl py-3 sm:py-4 font-black text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white shadow-lg shadow-cyan-500/20 transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            <div className="relative flex items-center justify-center gap-3">
+            <div className="relative flex items-center justify-center gap-2 sm:gap-3">
               {loading ? (
                 <>
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  <div className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   <span>Verifying Credentials...</span>
                 </>
               ) : (

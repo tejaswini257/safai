@@ -1,4 +1,3 @@
-// src/app/auth/sign-in/page.jsx
 "use client";
 import React, { useState } from "react";
 import AuthCard from "../../../components/auth/AuthCard";
@@ -17,18 +16,16 @@ export default function SignInPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Logic: Handle input changes centrally
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Logic: Form Submission
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
 
-    // Logical Validation
+    // 1. Validation Logic
     if (!formData.name || !formData.email || !formData.phone || !formData.password) {
       setError("All fields are required to create an account.");
       return;
@@ -42,10 +39,13 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      // Simulate Backend API Call
+      // 2. Simulate API Registration
       await new Promise((r) => setTimeout(r, 1500));
 
-      // Success Logic: Redirect to login
+      /**
+       * 3. Success Logic: Redirect to login.
+       * We append '?signup=success' so the Login page knows to show a welcome message.
+       */
       router.push("/auth/login?signup=success");
     } catch (err) {
       setError("System was unable to create your account. Please try again.");
@@ -59,8 +59,8 @@ export default function SignInPage() {
   const iconStyles = "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#58BECF] transition-colors";
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-[#F8FAFB] overflow-hidden py-10">
-      {/* Decorative background glows */}
+    <div className="relative min-h-screen flex items-center justify-center bg-[#F8FAFB] overflow-hidden py-10 p-4">
+      {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#E0F7FA]/50 blur-[120px] rounded-full -ml-48 -mt-48 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#E6F7F9]/60 blur-[120px] rounded-full -mr-48 -mb-48 pointer-events-none" />
 
@@ -82,72 +82,39 @@ export default function SignInPage() {
         }
       >
         <form onSubmit={handleSubmit} className="space-y-4 text-left" noValidate>
-          {/* Full Name */}
           <div className="space-y-1.5">
             <label className={labelStyles}>Full Name</label>
             <div className="relative group">
               <div className={iconStyles}><User size={16} /></div>
-              <input
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Full Name"
-                className={inputStyles}
-              />
+              <input name="name" type="text" value={formData.name} onChange={handleChange} placeholder="Full Name" className={inputStyles} />
             </div>
           </div>
 
-          {/* Email Address */}
           <div className="space-y-1.5">
             <label className={labelStyles}>Email Address</label>
             <div className="relative group">
               <div className={iconStyles}><Mail size={16} /></div>
-              <input
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="admin@safai.gov"
-                className={inputStyles}
-              />
+              <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="admin@safai.gov" className={inputStyles} />
             </div>
           </div>
 
-          {/* Contact & Security Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className={labelStyles}>Phone Number</label>
               <div className="relative group">
                 <div className={iconStyles}><Phone size={16} /></div>
-                <input
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="9876543210"
-                  className={inputStyles}
-                />
+                <input name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="9876543210" className={inputStyles} />
               </div>
             </div>
-
             <div className="space-y-1.5">
               <label className={labelStyles}>Access Password</label>
               <div className="relative group">
                 <div className={iconStyles}><Lock size={16} /></div>
-                <input
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className={inputStyles}
-                />
+                <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="••••••••" className={inputStyles} />
               </div>
             </div>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="animate-in fade-in slide-in-from-top-1 flex items-center gap-2 rounded-xl bg-rose-50 p-3 text-[10px] font-black uppercase tracking-wide text-rose-500 border border-rose-100">
               <ShieldCheck size={14} strokeWidth={3} />
@@ -155,7 +122,6 @@ export default function SignInPage() {
             </div>
           )}
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}

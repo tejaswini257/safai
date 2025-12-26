@@ -1,22 +1,35 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import SaafAIMap from "@/components/map/SaafAIMap";
+import dynamic from "next/dynamic"; // 1. Import dynamic for SSR handling
 import { Search, MapPin, Info, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+// 2. Dynamically import the Map with SSR disabled
+// This prevents "window is not defined" errors common with maps
+const SaafAIMap = dynamic(() => import("@/components/map/SaafAIMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full flex items-center justify-center bg-slate-50 dark:bg-slate-800">
+      <p className="text-xs font-black text-slate-400 animate-pulse uppercase tracking-widest">
+        Loading Map Layers...
+      </p>
+    </div>
+  ),
+});
+
 function MapContent() {
   const searchParams = useSearchParams();
-  const zoneIdFilter = searchParams.get("zoneId"); // Capture the Zone ID from the URL
+  const zoneIdFilter = searchParams.get("zoneId");
 
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [searchText, setSearchText] = useState("");
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFB] dark:bg-slate-900">
+    <div className="flex flex-col h-screen bg-[#F8FAFB] dark:bg-slate-900 overflow-hidden">
       {/* BRANDED HEADER */}
-      <div className="px-8 py-6 bg-white dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700 shadow-sm">
+      <div className="px-8 py-6 bg-white dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700 shadow-sm z-10">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 max-w-[1600px] mx-auto">
           <div className="flex items-center gap-4">
             <Link
@@ -31,7 +44,7 @@ function MapContent() {
                 Locate on Map
               </h1>
               {zoneIdFilter && (
-                <p className="text-[10px] font-bold text-blue-600 dark:text-blue-300 uppercase tracking-widest mt-1 flex items-center gap-1.5">
+                <p className="text-[10px] font-black text-blue-600 dark:text-blue-300 uppercase tracking-widest mt-1 flex items-center gap-1.5">
                   <Info size={12} />
                   Viewing Zone ID: {zoneIdFilter}
                 </p>
@@ -55,8 +68,9 @@ function MapContent() {
         </div>
       </div>
 
-      {/* MAP VIEW */}
-      <div className="flex-1 bg-white dark:bg-slate-900">
+      {/* MAP VIEW CONTAINER */}
+      {/* Added h-full and relative to ensure the map has a defined space to render */}
+      <div className="flex-1 relative w-full h-full overflow-hidden">
         <SaafAIMap
           selectedLocation={selectedLocation}
           onSelectLocation={setSelectedLocation}
@@ -68,7 +82,6 @@ function MapContent() {
   );
 }
 
-// Suspense is required for any page using useSearchParams in Next.js Client Components
 export default function LocatePage() {
   return (
     <Suspense fallback={

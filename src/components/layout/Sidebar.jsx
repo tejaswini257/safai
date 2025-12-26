@@ -132,7 +132,7 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
         </button>
       </div>
 
-      {/* NAV */}
+      {/* NAV CONTENT */}
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {navSections.map((section) => (
           <div key={section.heading}>
@@ -179,8 +179,7 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
                         <>
                           <span className="flex-1 text-left">{item.label}</span>
                           <ChevronDown
-                            className={`h-4 w-4 transition ${openGroups[item.label] ? "rotate-180" : ""
-                              }`}
+                            className={`h-4 w-4 transition ${openGroups[item.label] ? "rotate-180" : ""}`}
                           />
                         </>
                       )}
@@ -210,44 +209,46 @@ export default function Sidebar({ open, onClose, collapsed, onToggleCollapse }) 
         ))}
       </div>
 
-      {/* FOOTER */}
+      {/* FOOTER SECTION */}
       <div className="border-t border-[#EAF2F5] dark:border-gray-800 p-4 bg-white dark:bg-gray-900">
         <Link
           href="/dashboard/settings"
           onClick={onClose}
-          className="flex items-center gap-3 mb-3 p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-gray-800 transition-all group cursor-pointer"
-        >
-          <div className="h-9 w-9 rounded-full bg-[#EAF7F8] dark:bg-gray-800 flex items-center justify-center font-black text-[#2DB7C4] dark:text-cyan-400 group-hover:scale-110 transition-transform">
-          className={`flex items-center gap-3 mb-3 p-1.5 rounded-xl transition-all group cursor-pointer ${pathname === "/dashboard/settings" ? "bg-[#EAF7F8]" : "hover:bg-slate-50"
+          className={`flex items-center gap-3 mb-3 p-1.5 rounded-xl transition-all group cursor-pointer ${pathname === "/dashboard/settings"
+              ? "bg-[#EAF7F8] dark:bg-gray-800"
+              : "hover:bg-slate-50 dark:hover:bg-gray-800"
             }`}
         >
-          <div className={`h-9 w-9 rounded-full flex items-center justify-center font-black transition-transform group-hover:scale-110 ${pathname === "/dashboard/settings" ? "bg-[#2DB7C4] text-white" : "bg-[#EAF7F8] text-[#2DB7C4]"
+          {/* Profile Initials / Avatar */}
+          <div className={`h-9 w-9 rounded-full flex items-center justify-center font-black transition-transform group-hover:scale-110 ${pathname === "/dashboard/settings"
+              ? "bg-[#2DB7C4] text-white"
+              : "bg-[#EAF7F8] text-[#2DB7C4] dark:bg-gray-700 dark:text-cyan-400"
             }`}>
             TI
           </div>
 
           {!collapsed && (
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-bold text-[#2F3A45] dark:text-gray-200 truncate group-hover:text-[#2DB7C4] dark:group-hover:text-cyan-400 transition-colors">Test Intern</p>
-              <p className="text-[10px] font-bold text-[#9CA3AF] dark:text-gray-500 uppercase tracking-tighter">Admin Account</p>
-            </div>
-          )}
-              <p className={`text-sm font-bold truncate transition-colors ${pathname === "/dashboard/settings" ? "text-[#2DB7C4]" : "text-[#2F3A45] group-hover:text-[#2DB7C4]"
+              <p className={`text-sm font-bold truncate transition-colors ${pathname === "/dashboard/settings"
+                  ? "text-[#2DB7C4] dark:text-cyan-400"
+                  : "text-[#2F3A45] dark:text-gray-200 group-hover:text-[#2DB7C4] dark:group-hover:text-cyan-400"
                 }`}>
                 Test Intern
               </p>
-              <p className="text-[10px] font-bold text-[#9CA3AF] uppercase tracking-tighter">
+              <p className="text-[10px] font-bold text-[#9CA3AF] dark:text-gray-500 uppercase tracking-tighter">
                 Admin Account
               </p>
             </div>
           )}
 
+          {/* Settings Icon */}
           {!collapsed && (
-            <Settings className={`h-4 w-4 transition-transform group-hover:rotate-45 ${pathname === "/dashboard/settings" ? "text-[#2DB7C4]" : "text-[#9CA3AF]"
+            <Settings className={`h-4 w-4 transition-transform group-hover:rotate-45 ${pathname === "/dashboard/settings" ? "text-[#2DB7C4] dark:text-cyan-400" : "text-[#9CA3AF]"
               }`} />
           )}
         </Link>
 
+        {/* Logout Button */}
         <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#EAF2F5] dark:border-gray-700 px-3 py-2 text-sm font-semibold text-[#2F3A45] dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-400 hover:border-rose-100 dark:hover:border-rose-900/50 transition-all group">
           <LogOut className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
           {!collapsed && "Logout"}
