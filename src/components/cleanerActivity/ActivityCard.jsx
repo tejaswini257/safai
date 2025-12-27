@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react"; // Added for modal control
+import { useState } from "react";
 import Link from "next/link";
-import { MapPin, Clock, ArrowRight, User, X } from "lucide-react"; // Added X for closing modal
+import { MapPin, Clock, ArrowRight, User, X } from "lucide-react";
 
 export default function ActivityCard({ activity }) {
-    // 1. State to manage the Gallery Modal visibility
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
     const IMAGE_BASE_PATH = "/image/CleanerActivity";
@@ -17,14 +16,18 @@ export default function ActivityCard({ activity }) {
         return `${IMAGE_BASE_PATH}/${nameWithExtension}`;
     };
 
+    // Brand gradient style
+    const brandGradient = "linear-gradient(to right, #58BECF, #6D9CDC)";
+
     return (
         <>
             <div className="flex flex-col justify-between rounded-[24px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-1 p-5 h-[380px] transition-all duration-300 group">
                 <div className="space-y-3">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
+                            {/* Avatar background adjusted to match soft brand tones */}
                             <div className="h-10 w-10 rounded-full bg-[#E0F7FA] border border-cyan-100 flex items-center justify-center">
-                                <User className="h-5 w-5 text-[#007C85]" />
+                                <User className="h-5 w-5 text-[#58BECF]" />
                             </div>
                             <div>
                                 <h3 className="text-sm font-bold text-slate-900 leading-none mb-1">
@@ -45,7 +48,6 @@ export default function ActivityCard({ activity }) {
                             Evidence Logs ({activity.images?.length || 0})
                         </p>
 
-                        {/* 2. Interactive Image Stack */}
                         <div className="flex items-center -space-x-3">
                             {activity.images?.slice(0, 4).map((imgName, i) => (
                                 <button
@@ -69,7 +71,8 @@ export default function ActivityCard({ activity }) {
                             {activity.images?.length > 4 && (
                                 <button
                                     onClick={() => setIsGalleryOpen(true)}
-                                    className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-[#007C85] text-[11px] font-black text-white shadow-sm z-20 hover:bg-[#58BECF] transition-colors cursor-pointer active:scale-95"
+                                    style={{ background: brandGradient }}
+                                    className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white text-[11px] font-black text-white shadow-sm z-20 hover:opacity-90 transition-opacity cursor-pointer active:scale-95"
                                 >
                                     +{activity.images.length - 4}
                                 </button>
@@ -97,7 +100,9 @@ export default function ActivityCard({ activity }) {
                 <div className="pt-2">
                     <Link
                         href={`/dashboard/cleaner-activity/${activity.id}`}
-                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-white border border-slate-200 text-xs font-black uppercase tracking-widest text-[#007C85] hover:bg-[#007C85] hover:text-white hover:border-[#007C85] hover:shadow-lg transition-all duration-300 active:scale-95"
+                        // Detailed Report button now matches the brand gradient and white text
+                        style={{ background: brandGradient }}
+                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-black uppercase tracking-widest text-white hover:opacity-90 hover:shadow-lg hover:shadow-cyan-100 transition-all duration-300 active:scale-95"
                     >
                         Detailed Report
                         <ArrowRight className="h-3.5 w-3.5" />
@@ -105,14 +110,23 @@ export default function ActivityCard({ activity }) {
                 </div>
             </div>
 
-            {/* 3. GALLERY MODAL OVERLAY */}
+            {/* GALLERY MODAL OVERLAY */}
             {isGalleryOpen && (
                 <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
                     <div className="bg-white w-full max-w-4xl rounded-[32px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
                         {/* Modal Header */}
                         <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0">
                             <div>
-                                <h2 className="text-xl font-black text-[#007C85] uppercase tracking-tight">Full Evidence Log</h2>
+                                <h2
+                                    className="text-xl font-black uppercase tracking-tight"
+                                    style={{
+                                        background: brandGradient,
+                                        WebkitBackgroundClip: "text",
+                                        WebkitTextFillColor: "transparent"
+                                    }}
+                                >
+                                    Full Evidence Log
+                                </h2>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{activity.cleanerName} • {activity.location}</p>
                             </div>
                             <button
@@ -123,7 +137,6 @@ export default function ActivityCard({ activity }) {
                             </button>
                         </div>
 
-                        {/* Modal Content: Full Grid of all photos */}
                         <div className="p-6 overflow-y-auto">
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                                 {activity.images?.map((imgName, idx) => (
@@ -141,11 +154,11 @@ export default function ActivityCard({ activity }) {
                             </div>
                         </div>
 
-                        {/* Modal Footer */}
                         <div className="p-6 border-t border-slate-100 flex justify-end bg-slate-50">
                             <button
                                 onClick={() => setIsGalleryOpen(false)}
-                                className="px-8 py-3 bg-[#007C85] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#58BECF] transition-all active:scale-95"
+                                style={{ background: brandGradient }}
+                                className="px-8 py-3 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 hover:shadow-lg transition-all active:scale-95"
                             >
                                 Close Gallery
                             </button>

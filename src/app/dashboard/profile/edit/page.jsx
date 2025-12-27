@@ -8,7 +8,6 @@ import Link from "next/link";
 export default function EditProfilePage() {
     const router = useRouter();
 
-    // Initial state matching your userData schema
     const [formData, setFormData] = useState({
         name: "Anil Saafai User",
         email: "anilRashilpur@gmail.com",
@@ -18,10 +17,12 @@ export default function EditProfilePage() {
 
     const handleSave = (e) => {
         e.preventDefault();
-        // Here you would normally call your API
         alert("Profile Registry Updated Successfully!");
         router.push("/dashboard/profile");
     };
+
+    // Shared brand gradient
+    const brandGradient = "linear-gradient(to right, #58BECF, #6D9CDC)";
 
     return (
         <div className="min-h-screen bg-[#F8FAFB] pb-12 transition-colors duration-300">
@@ -32,12 +33,21 @@ export default function EditProfilePage() {
                     <div className="flex items-center gap-4">
                         <Link
                             href="/dashboard/profile"
-                            className="p-2.5 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-[#007C85] transition-all shadow-sm"
+                            className="p-2.5 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-[#58BECF] transition-all shadow-sm"
                         >
                             <ArrowLeft size={20} strokeWidth={3} />
                         </Link>
                         <div>
-                            <h1 className="text-xl font-black text-[#007C85] uppercase tracking-tight">Edit Profile</h1>
+                            <h1
+                                className="text-xl font-black uppercase tracking-tight"
+                                style={{
+                                    background: brandGradient,
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent"
+                                }}
+                            >
+                                Edit Profile
+                            </h1>
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Update your administrative credentials</p>
                         </div>
                     </div>
@@ -50,10 +60,17 @@ export default function EditProfilePage() {
                         {/* Avatar Edit Section */}
                         <div className="flex flex-col items-center gap-4 py-4 border-b border-slate-50">
                             <div className="relative group">
-                                <div className="h-24 w-24 rounded-[32px] bg-[#E6F7F9] flex items-center justify-center border-4 border-white shadow-lg">
-                                    <User size={40} className="text-[#58BECF]" />
+                                <div
+                                    style={{ background: brandGradient }}
+                                    className="h-24 w-24 rounded-[32px] flex items-center justify-center border-4 border-white shadow-lg"
+                                >
+                                    <User size={40} className="text-white" />
                                 </div>
-                                <button type="button" className="absolute -bottom-2 -right-2 p-2 bg-[#007C85] text-white rounded-xl shadow-lg border-2 border-white hover:scale-110 transition-transform">
+                                <button
+                                    type="button"
+                                    style={{ background: brandGradient }}
+                                    className="absolute -bottom-2 -right-2 p-2 text-white rounded-xl shadow-lg border-2 border-white hover:scale-110 transition-transform"
+                                >
                                     <Camera size={16} />
                                 </button>
                             </div>
@@ -63,7 +80,7 @@ export default function EditProfilePage() {
                         {/* Input Fields */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-[#007C85] uppercase tracking-widest ml-1">Full Name</label>
+                                <label className="text-[10px] font-black text-[#58BECF] uppercase tracking-widest ml-1">Full Name</label>
                                 <div className="relative">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     <input
@@ -76,7 +93,7 @@ export default function EditProfilePage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-[#007C85] uppercase tracking-widest ml-1">Email Address</label>
+                                <label className="text-[10px] font-black text-[#58BECF] uppercase tracking-widest ml-1">Email Address</label>
                                 <div className="relative">
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     <input
@@ -89,7 +106,7 @@ export default function EditProfilePage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-[#007C85] uppercase tracking-widest ml-1">Phone Number</label>
+                                <label className="text-[10px] font-black text-[#58BECF] uppercase tracking-widest ml-1">Phone Number</label>
                                 <div className="relative">
                                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     <input
@@ -102,9 +119,9 @@ export default function EditProfilePage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-[#007C85] uppercase tracking-widest ml-1">Assigned Zone</label>
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Assigned Zone</label>
                                 <div className="relative">
-                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
+                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-200" size={16} />
                                     <input
                                         type="text"
                                         value={formData.zone}
@@ -126,7 +143,8 @@ export default function EditProfilePage() {
                         </Link>
                         <button
                             type="submit"
-                            className="flex items-center gap-2 px-8 py-3 bg-[#007C85] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#58BECF] hover:shadow-lg hover:shadow-[#007C85]/20 transition-all active:scale-95 shadow-md"
+                            style={{ background: brandGradient }}
+                            className="flex items-center gap-2 px-8 py-3 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 hover:shadow-lg hover:shadow-cyan-200 transition-all active:scale-95 shadow-md"
                         >
                             <Save size={14} /> Save Changes
                         </button>

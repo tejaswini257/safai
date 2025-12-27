@@ -37,7 +37,8 @@ export default function ZonalTab({ onNotify }) {
                 {zones.map((zone) => (
                     <div
                         key={zone}
-                        className="p-4 border border-slate-100 rounded-2xl flex items-center justify-between hover:border-[#007C85]/20 transition-all bg-slate-50/30 group"
+                        // Updated hover border to match your new branding (#58BECF)
+                        className="p-4 border border-slate-100 rounded-2xl flex items-center justify-between hover:border-[#58BECF]/30 transition-all bg-slate-50/30 group"
                     >
                         <div className="flex flex-col">
                             <span className="text-xs font-black text-slate-700 uppercase tracking-tight">
@@ -49,20 +50,23 @@ export default function ZonalTab({ onNotify }) {
                         </div>
                         <input
                             type="checkbox"
-                            className="accent-[#007C85] h-5 w-5 cursor-pointer rounded-lg"
+                            // Updated accent color to match the gradient start color
+                            className="accent-[#58BECF] h-5 w-5 cursor-pointer rounded-lg"
                             defaultChecked
                         />
                     </div>
                 ))}
             </div>
 
-            <div className="p-4 bg-[#E0F7FA]/30 rounded-2xl border border-[#007C85]/10">
-                <p className="text-[10px] text-[#007C85] font-black uppercase leading-relaxed">
+            {/* Note box color adjustment for consistency */}
+            <div className="p-4 bg-[#58BECF]/5 rounded-2xl border border-[#58BECF]/10">
+                <p className="text-[10px] text-[#4A8A94] font-black uppercase leading-relaxed">
                     Note: Disabling a zone here only hides it from your personal view.
                     It will still be tracked in the master inspection registry.
                 </p>
             </div>
 
+            {/* Inherits linear-gradient from SharedUI.js */}
             <SaveButton onClick={handleSave} loading={loading} />
         </div>
     );

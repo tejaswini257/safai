@@ -37,16 +37,10 @@ export default function LocationHierarchyPage() {
                     {/* Buttons Container - Stacks on small mobile, row on tablet+ */}
                     <div className="flex flex-row items-center gap-3 w-full lg:w-auto">
                         {/* Filter Button - Responsive text (hidden on very small screens) */}
-                        <button className="flex flex-1 lg:flex-none items-center justify-center gap-2 px-5 py-3.5 bg-white border border-slate-200 rounded-2xl text-[#007C85] text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm active:scale-95">
-                            <SlidersHorizontal size={14} strokeWidth={3} />
-                            <span className="hidden sm:inline">Filter</span>
-                        </button>
+
 
                         {/* Add Button - Expands to fill space on mobile */}
-                        <button className="btn-gradient flex-[2] lg:flex-none flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-cyan-500/20 active:scale-95 transition-all">
-                            <Plus size={16} strokeWidth={3} />
-                            <span className="whitespace-nowrap">Add New Zone</span>
-                        </button>
+
                     </div>
                 </div>
 

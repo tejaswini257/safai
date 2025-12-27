@@ -15,6 +15,13 @@ export default function NotificationsTab({ onNotify }) {
         }, 1000);
     };
 
+    // Define the custom gradient style
+    const buttonGradientStyle = {
+        background: "linear-gradient(to right, #58BECF, #6D9CDC)",
+        color: "#FFFFFF",
+        border: "none" // Ensures no default border interferes with the gradient
+    };
+
     return (
         <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-300">
             <div>
@@ -45,7 +52,13 @@ export default function NotificationsTab({ onNotify }) {
                 />
             </div>
 
-            <SaveButton onClick={handleSave} loading={loading} />
+            {/* Added style prop to apply the linear gradient */}
+            <SaveButton
+                onClick={handleSave}
+                loading={loading}
+                style={buttonGradientStyle}
+                className="hover:opacity-90 transition-opacity" // Optional: adds a slight effect on hover
+            />
         </div>
     );
 }

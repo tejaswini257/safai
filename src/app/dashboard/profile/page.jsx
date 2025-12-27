@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation"; // Import the router for redirection
+import { useRouter } from "next/navigation";
 import { User, Mail, Phone, MapPin, ShieldCheck, Edit3, LogOut, Camera } from "lucide-react";
 import StatusBadge from "@/components/washroommain/StatusBadge";
 import Link from "next/link";
@@ -8,24 +8,17 @@ import Link from "next/link";
 export default function ProfilePage() {
     const router = useRouter();
 
-    // 1. Define the missing handleLogout function
     const handleLogout = () => {
-        // Clear all session/local storage data
         localStorage.clear();
         sessionStorage.clear();
-
-        // Manual cookie cleanup (standard security practice)
         document.cookie.split(";").forEach((c) => {
             document.cookie = c
                 .replace(/^ +/, "")
                 .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
         });
-
-        // Redirect to login page
         router.push("auth/login");
     };
 
-    // Mock data for display
     const userData = {
         name: "Anil Saafai User",
         role: "Zonal Supervisor",
@@ -36,27 +29,45 @@ export default function ProfilePage() {
         status: "active"
     };
 
+    // Shared brand gradient
+    const brandGradient = "linear-gradient(to right, #58BECF, #6D9CDC)";
+
     return (
         <div className="min-h-screen bg-[#F8FAFB] pb-12 transition-colors duration-300">
             <div className="max-w-[1200px] mx-auto p-4 md:p-8 space-y-6">
 
                 {/* 1. IDENTITY HEADER CARD */}
                 <div className="bg-white border border-slate-100 rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#E6F7F9] rounded-full -mr-32 -mt-32 opacity-50" />
+                    {/* Decorative Circle matching branding */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#58BECF] rounded-full -mr-32 -mt-32 opacity-10" />
 
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
                         <div className="relative group">
-                            <div className="h-32 w-32 rounded-[40px] bg-gradient-to-br from-[#58BECF] to-[#007C85] flex items-center justify-center border-4 border-white shadow-xl">
+                            {/* Avatar Container with Gradient */}
+                            <div
+                                style={{ background: brandGradient }}
+                                className="h-32 w-32 rounded-[40px] flex items-center justify-center border-4 border-white shadow-xl"
+                            >
                                 <span className="text-4xl font-black text-white uppercase">{userData.name.charAt(0)}</span>
                             </div>
-                            <button className="absolute bottom-0 right-0 p-2 bg-white rounded-xl shadow-lg border border-slate-100 text-[#007C85] hover:scale-110 transition-transform">
+                            <button className="absolute bottom-0 right-0 p-2 bg-white rounded-xl shadow-lg border border-slate-100 text-[#58BECF] hover:scale-110 transition-transform">
                                 <Camera size={18} strokeWidth={2.5} />
                             </button>
                         </div>
 
                         <div className="text-center md:text-left space-y-2 flex-1">
                             <div className="flex flex-col md:flex-row md:items-center gap-3">
-                                <h1 className="text-3xl font-black text-[#007C85] tracking-tight">{userData.name}</h1>
+                                {/* Gradient Header Text */}
+                                <h1
+                                    className="text-3xl font-black tracking-tight"
+                                    style={{
+                                        background: brandGradient,
+                                        WebkitBackgroundClip: "text",
+                                        WebkitTextFillColor: "transparent"
+                                    }}
+                                >
+                                    {userData.name}
+                                </h1>
                                 <StatusBadge status={userData.status} />
                             </div>
                             <p className="text-sm font-black text-[#58BECF] uppercase tracking-[0.2em]">{userData.role}</p>
@@ -70,9 +81,11 @@ export default function ProfilePage() {
                             </div>
                         </div>
 
+                        {/* Edit Profile Button with Gradient */}
                         <Link
                             href="/dashboard/profile/edit"
-                            className="flex items-center gap-2 px-6 py-3 bg-[#007C85] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#58BECF] hover:shadow-lg transition-all active:scale-95"
+                            style={{ background: brandGradient }}
+                            className="flex items-center gap-2 px-6 py-3 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:opacity-90 hover:shadow-lg transition-all active:scale-95"
                         >
                             <Edit3 size={14} /> Edit Profile
                         </Link>
@@ -100,7 +113,6 @@ export default function ProfilePage() {
                             </div>
                         </div>
 
-                        {/* THE BUTTON THAT WAS THROWING THE ERROR */}
                         <div className="mt-8 pt-8 border-t border-slate-50">
                             <button
                                 onClick={handleLogout}
@@ -116,7 +128,8 @@ export default function ProfilePage() {
                             <ShieldCheck size={32} className="text-[#58BECF]" />
                         </div>
                         <div>
-                            <h4 className="font-black text-[#007C85] text-sm uppercase tracking-widest">Workspace Compliance</h4>
+                            {/* Section title matches branding */}
+                            <h4 className="font-black text-[#58BECF] text-sm uppercase tracking-widest">Workspace Compliance</h4>
                             <p className="text-xs font-bold text-slate-400 mt-1 max-w-xs">Data Verified Registry for Compliance Monitoring.</p>
                         </div>
                     </div>

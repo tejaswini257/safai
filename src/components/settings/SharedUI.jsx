@@ -41,9 +41,21 @@ export function SaveButton({ onClick, loading }) {
             <button
                 onClick={onClick}
                 disabled={loading}
-                className="flex items-center gap-2 px-10 py-4 bg-[#007C85] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#58BECF] transition-all active:scale-95 disabled:opacity-50"
+                // Updated style for linear gradient and white text
+                style={{
+                    background: "linear-gradient(to right, #58BECF, #6D9CDC)",
+                    color: "#FFFFFF"
+                }}
+                className="flex items-center gap-2 px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all active:scale-95 disabled:opacity-50 shadow-md shadow-cyan-100"
             >
-                {loading ? "Saving..." : <><Save className="h-4 w-4" /> Save Changes</>}
+                {loading ? (
+                    "Saving..."
+                ) : (
+                    <>
+                        <Save className="h-4 w-4" />
+                        Save Changes
+                    </>
+                )}
             </button>
         </div>
     );
